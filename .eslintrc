@@ -1,0 +1,158 @@
+{
+    // ESLint 一旦发现配置文件中有 "root": true，它就会停止在父级目录中寻找。
+    "root": true,
+    // 默认情况下，ESLint 支持 ECMAScript 5 语法, 你可以覆盖该设置启用对 ECMAScript 其它版本和 JSX 的支持
+    "parserOptions": {
+        // 设置为 3， 5 (默认)， 6、7 或 8 指定你想要使用的 ECMAScript 版本。你也可以指定为 2015（同 6）
+        "ecmaVersion": 2015,
+        // 设置为 "script" (默认) 或 "module" 如果你的代码是 ECMAScript 模块
+        "sourceType": "module",
+        // 这是个对象，表示你想使用的额外的语言特性:
+        "ecmaFeatures": {
+            // globalReturn - 允许在全局作用域下使用 return 语句
+            // impliedStrict - 启用全局 strict mode (如果 ecmaVersion 是 5 或更高)
+            // jsx - 启用 JSX
+            // experimentalObjectRestSpread - 启用对实验性的 object rest/spread properties 的支持
+            "experimentalObjectRestSpread": true
+        }
+    },
+    // ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm 安装它。
+    // 在配置文件里配置插件，要使用 plugins ，其中包含插件名字的列表。插件名称可以省略 eslint-plugin- 前缀。
+    "plugins": [
+        "promise"
+    ],
+    "extends": [],
+    "env": {
+        // 支持除模块外所有 ECMAScript 6 特性（该选项会自动设置 ecmaVersion 解析器选项为 6）。
+        "es6": true,
+        // Node.js 全局变量和 Node.js 作用域。
+        "node": true,
+        // 添加所有的 Mocha 测试全局变量。
+        "mocha": true
+    },
+    // 脚本在执行期间访问的额外的全局变量
+    "globals": {
+        "__BASE__": true
+    },
+    // Rules - 启用的规则及各自的错误级别
+    // 可以在你的文件中使用以下格式的块注释来临时禁止规则出现警告： /* eslint-disable no-alert, no-console */
+    // 重新打开/* eslint-enable */
+    "rules": {
+        // 禁止条件表达式中出现赋值操作符
+        "no-cond-assign": "error",
+        // 禁用 console
+        "no-console": "warn",
+        // 禁止在条件中使用常量表达式
+        "no-constant-condition": "error",
+        // 在 ASCII 中，0-31 范围内的控制字符是特殊的、不可见的字符。
+        // 这些字符很少被用在 JavaScript 字符串中，所以一个正则表达式如果包含这些字符的，很有可能一个错误。
+        // 禁止在正则表达式中使用控制字符
+        "no-control-regex": "error",
+        // 禁用 debugger
+        "no-debugger": "error",
+        // 禁止 function 定义中出现重名参数
+        "no-dupe-args": "error",
+        // 禁止对象字面量中出现重复的 key
+        "no-dupe-keys": "error",
+        // 禁止出现重复的 case 标签
+        "no-duplicate-case": "error",
+        // 在正则表达式中空字符集不能匹配任何字符，它们可能是打字错误。
+        // 禁止在正则表达式中使用空字符集
+        "no-empty-character-class": "error",
+        // 禁止出现空语句块
+        "no-empty": "error",
+        // 在 try 语句中的 catch 子句中，如果意外地（或故意地）给异常参数赋值，是不可能引用那个位置的错误的
+        "no-ex-assign": "error",
+        // 禁止不必要的布尔转换
+        "no-extra-boolean-cast": "error",
+        // 禁止不必要的分号
+        "no-extra-semi": "error",
+        // 在 ES6 之前的 JavaScript 中，函数声明只能在程序或另一个函数体的顶层
+        // 禁止在嵌套的块中出现变量声明或 function 声明
+        "no-inner-declarations": "error",
+        // 禁止 RegExp 构造函数中存在无效的正则表达式字符串
+        "no-invalid-regexp": "error",
+        // 禁止在字符串和注释之外不规则的空白
+        "no-irregular-whitespace": "warn",
+        // 禁止把全局对象作为函数调用
+        "no-obj-calls": "error",
+        // 禁止正则表达式字面量中出现多个空格
+        "no-regex-spaces": "error",
+        // 禁用稀疏数组
+        "no-sparse-arrays": "error",
+        // 禁止在return、throw、continue 和 break 语句之后出现不可达代码
+        "no-unreachable": "error",
+        // 禁止在 finally 语句块中出现控制流语句
+        "no-unsafe-finally": "error",
+        // 要求使用 isNaN() 检查 NaN
+        "use-isnan": "error",
+        // 强制 typeof 表达式与有效的字符串进行比较 (valid-typeof)
+        "valid-typeof": "error",
+        // 强制把变量的使用限制在其定义的作用域范围内
+        "block-scoped-var": "error",
+        // 要求使用 === 和 !==
+        "eqeqeq": "error",
+        // 禁用 arguments.caller 或 arguments.callee,使用使一些代码优化变得不可能
+        // 在 JavaScript 的新版本中它们已被弃
+        "no-caller": "error",
+        // 禁用 eval()
+        "no-eval": "error",
+        // setTimeout() 和 setInterval() 都可以接受一个 JavaScript字符串代码作为第一个参数。
+ // 这样会产生一个类似 eval() 的作用域。
+        // 最佳实践是总是使用函数作为 setTimeout() 和 setInterval() 的第一个参数。
+        "no-implied-eval": "error",
+        // 禁用魔术数字
+        "no-magic-numbers": ["error", {
+            // 以下数字可以
+            "ignore": [-1, 0, 1, 60, 100, 20]
+            // 数组索引可以
+            // "ignoreArrayIndexes": true 
+        }],
+        // 禁止对 function 的参数进行重新赋值
+        "no-param-reassign": "error",
+        // 使用 Error 对象最基本的好处是它们能自动地追踪到异常产生和起源的地方。
+        // 禁止抛出异常字面量
+        "no-throw-literal": "error",
+        // 禁用with语句
+        "no-with": "error",
+        // parseInt()也自动检测八进制文本，这会出现问题，因为许多开发人员认为前导0会被忽略。
+        // 强制在parseInt()使用基数参数
+        "radix": "error",
+        // 创建一个立即执行函数 (IIFE) 的一个通用技术是用括号包裹一个函数声明。
+        // 括号内的函数被解析为一个表达式，而不是一个声明。
+        "wrap-iife": "error",
+        // 禁用同步方法
+        "no-sync": "warn",
+        // 如果忘记处理这些错误会导致你的应用程序出现一些非常奇怪的行为。
+        "handle-callback-err": "error",
+        // 禁止使用拖尾逗号
+        "comma-dangle": "error",
+        // 强制行的最大长度
+        "max-len": ["warn", {
+            "code": 80,
+            "ignoreComments": true,
+            "ignoreTrailingComments": true,
+            "ignoreUrls": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreRegExpLiterals": true
+        }],
+        // 限制最大参数个数
+        "max-params": ["error", {
+            "max": 4
+        }],
+        // 派生类中的构造函数必须调用 super()。非派生类的构造函数不能调用 super()
+        // 要求构造函数中有super调用
+        "constructor-super": "error",
+        // 禁止修改 const 声明的变量
+        "no-const-assign": "error",
+        // 不允许隐式判断null
+        "no-eq-null": "error",
+        // 不允许定义undefined值，都应该设置为null
+        "no-undef-init": "error",
+        // 不允许undefined作为变量标识符
+        "no-undefined": "error",
+        // 不允许使用var定义变量，使用let和const代替
+        "no-unused-vars": "warn"
+    }
+}
