@@ -1,0 +1,68 @@
+body,
+ul,
+p,
+a,
+div,
+img {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body,html{
+  width: 100%;
+  height: 100%;
+}
+li {
+    list-style: none;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #000;
+}
+
+img {
+    border: none;
+}
+.cf:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+.hidden {
+    visibility: hidden!important;
+}
+.show {
+    visibility: visible!important;
+}
+.none {
+    display: none!important;
+}
+.block {
+    display: block!important;
+}
+.bgImg{
+ background-size: cover;
+ background-position: center;
+ background-repeat:no-repeat;
+}
+.p-r{
+    position: relative;
+}
+.p-r>.acm{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
