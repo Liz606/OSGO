@@ -1,6 +1,6 @@
 <template>
   <div class="app-container bgImg">
-    <header class="main-header p-r" style="background-image: url(http://static.ghostchina.com/image/6/d1/fcb3879e14429d75833a461572e64.jpg)">
+    <header class="main-header p-r" style="background-image: url(http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg)">
         <div class="acm">
         <img src="../assets/images/white-logo.png" width="80%" alt="">
         <p>欢迎使用操作系统原理课程教学辅助系统

@@ -19,8 +19,7 @@
           </div>
         </div>
         <div class="svg-container col-xs-12 col-md-8">
-          <div id="svg">
-          </div>
+           <svg id="svg"></svg>
         </div>
       </div>
     </div>
@@ -31,22 +30,41 @@
 <script>
     import Vue from 'vue'
   	import MainLayout from '../layouts/View.vue'
-  	import VLink from '../components/VLink.vue'
+    import VLink from '../components/VLink.vue'
   	import '../assets/snap/snap.svg.0.5.1.js'
   	export default {
   	  components: {
   	    MainLayout,
   	    VLink
-  	  },
-      ready:function () {
-        var s = Snap('#svg');
-        console.log(Snap);
-        console.log(Snap('#svg'));
-        var bigCircle = s.circle(150, 150, 100);
-        // Lets create big circle in the middle:
-        //var bigCircle = s.circle(150, 150, 100);
-      }
+  	  }
   	}
+function courseStateSVG(){
+  var s = Snap("#svg");
+  s.clear();
+  var bigCircle = s.circle(150, 150, 50);
+  var stateRect = s.rect(75, 250,150,50,5,5);
+  var readyBtn = s.paper.path('M25.207,9.594V4.082L12.793,11.25l12.415,7.168v-5.792C31.57,13.466,36.5,18.912,36.5,25.5c0,7.168-5.832,13-13,13s-13-5.832-13-13c0-0.565,0.049-1.118,0.119-1.664l-2.922-0.717C7.58,23.898,7.5,24.689,7.5,25.5c0,8.822,7.178,16,16,16s16-7.178,16-16C39.5,17.255,33.229,10.449,25.207,9.594z').attr({
+    fill:'#cccccc',
+    class:'ready-btn'
+  })
+  var readyRect = s.rect(720, 0,50,50,5,5).attr({
+    fill: "transparent",
+  });
+  bigCircle.attr({
+      fill: "#bada55",
+      stroke: "#000",
+      strokeWidth: 5
+  });
+  stateRect.attr({
+    fill: "#bada55",
+    value:'dvdf'
+  });
+  readyRect.append(readyBtn);
+  readyRect.click(function(){
+    courseStateSVG();
+  });
+}
+courseStateSVG();
 
 </script>
 <style scoped>
@@ -67,6 +85,9 @@
     float: left;  
     margin: 20px 10px 40px 0;  
     font: 1em source-sans-pro, Source Sans Pro, Helvetica, sans-serif;  
+  }
+  .ready-btn:hover{
+    cursor: pointer;
   }
 .illustrate-container .title {
     padding: 20px;  
