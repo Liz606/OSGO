@@ -14,7 +14,9 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "backbone": "^1.3.3",
     "element-ui": "^1.3.1",
+    "pixi.js": "^4.5.1",
     "snapsvg": "^0.5.1",
     "vue": "^2.2.6",
     "vue-router": "^2.3.1"
