@@ -1,29 +1,29 @@
 <template>
   <main-layout>
     <div class="content-container">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-md-4">
-          <div class="illustrate-container">
-            <div class="title">进程的状态转换</div>
-            <blockquote>
-              <p>
-                进程与程序的最大区别是其动态性。随着进程的推进，它会不断改变状态。进程状态由具体操作系统根据进程当前活动而定义。例如，每个进程可处于如下状态：创建、就绪、运行、等待（阻塞）、终止。通常讲的进程三个基本状态是指就绪状态、运行状态和等待或阻塞状态。
-                <br> 创建（新）：进程正被创建；
-                <br> 运行：进程的指令正被执行；
-                <br> 等待：进程正在等待发生一些事件（如I/O 完成或接收一个信号），也称阻塞状态；
-                <br> 就绪：进程正等待分配处理器；
-                <br> 终止：进程结束运行。
-              </p>
-            </blockquote>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-md-4">
+            <div class="illustrate-container">
+              <div class="title">进程的状态转换</div>
+              <blockquote>
+                <p>
+                  进程与程序的最大区别是其动态性。随着进程的推进，它会不断改变状态。进程状态由具体操作系统根据进程当前活动而定义。例如，每个进程可处于如下状态：创建、就绪、运行、等待（阻塞）、终止。通常讲的进程三个基本状态是指就绪状态、运行状态和等待或阻塞状态。
+                  <br> 创建（新）：进程正被创建；
+                  <br> 运行：进程的指令正被执行；
+                  <br> 等待：进程正在等待发生一些事件（如I/O 完成或接收一个信号），也称阻塞状态；
+                  <br> 就绪：进程正等待分配处理器；
+                  <br> 终止：进程结束运行。
+                </p>
+              </blockquote>
+            </div>
           </div>
-        </div>
-        <div class="appView-container col-xs-12 col-md-8">
-           <div id="appView"></div>
+          <div class="svg-container col-xs-12 col-md-8">
+            <svg id="svg"></svg>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </main-layout>
 </template>
 
@@ -31,8 +31,7 @@
     import Vue from 'vue'
   	import MainLayout from '../layouts/View.vue'
     import VLink from '../components/VLink.vue'
-    import '../assets/two/two.js'
-  	//import '../assets/snap/snap.svg.0.5.1.js'
+  	import '../assets/snap/snap.svg.0.5.1.js'
   	export default {
   	  components: {
   	    MainLayout,
@@ -40,144 +39,129 @@
   	  }
   	}
 
-    var elem = document.getElementById('appView');
-    var two = new Two({ width: 285, height: 200 }).appendTo(elem);
-    var circle = two.makeCircle(-70, 0, 50);
-    var rect = two.makeRectangle(70, 0, 100, 100);
-    circle.fill = '#FF8000';
-    circle.stroke = 'orangered';
-    rect.fill = 'rgba(0, 200, 255, 0.75)';
-    rect.stroke = '#1C75BC';
-    var group = two.makeGroup(circle, rect);
-    group.translation.set(two.width / 2, two.height / 2);
-    group.rotation = Math.PI;
-    group.scale = 0.75;
-    group.linewidth = 7;
-    two.update();
-
-    // var s = Snap("#svg");
+    var s = Snap("#svg");
     // function courseStateSVG(){
-    //   s.clear();
-    //   //进程调度
-    //   var path1 = s.paper.line(450, 220, 500, 320).attr({
+    //       s.clear();
+    //       //进程调度
+    //       var path1 = s.paper.line(450, 220, 500, 320).attr({
     //       stroke: "#fff",
     //       strokeWidth: 5  
-    //   });
-    //   //时间片完
-    //   var path2 = s.paper.line(470, 220, 520, 320).attr({
+    //       });
+    //       //时间片完
+    //       var path2 = s.paper.line(470, 220, 520, 320).attr({
     //       stroke: "#fff",
     //       strokeWidth: 5  
-    //   });
-    //   //I/O完成
-    //   var path3 = s.paper.line(270, 220, 220, 320).attr({
+    //       });
+    //       //I/O完成
+    //       var path3 = s.paper.line(270, 220, 220, 320).attr({
     //       stroke: "#fff",
     //       strokeWidth: 5  
-    //   });
-    //   //I/O请求
-    //   var path4 = s.paper.line(250, 380, 480, 380).attr({
+    //       });
+    //       //I/O请求
+    //       var path4 = s.paper.line(250, 380, 480, 380).attr({
     //       stroke: "#fff",
     //       strokeWidth: 5  
-    //   });
-    //   var bigCircle = s.paper.circle(375, 80, 50).attr({
+    //       });
+    //       var bigCircle = s.paper.circle(375, 80, 50).attr({
     //       fill: "#44cef6",
     //       stroke: "#ffffff",
     //       strokeWidth: 5
-    //   });
-
-
-    //   var stateRect1 =s.paper.group(s.paper.rect(300, 150,150,50,5,5).attr({
-    //     fill: "#44cef6"
-    //   }),s.paper.text(370, 180,'就绪状态').attr({
-    //     fill: "#fff",
-    //     'font-weight': 100,
-    //     'font-size': 20,
-    //     'text-anchor': 'middle',
-    //   })) 
-
-
-    //   var stateRect2 =s.paper.group(s.paper.rect(500, 350,150,50,5,5).attr({
-    //     fill: "#9ed048"
-    //   }),s.paper.text(570, 380,'运行状态').attr({
-    //     fill: "#fff",
-    //     'font-weight': 100,
-    //     'font-size': 20,
-    //     'text-anchor': 'middle',
-    //   })) 
-
-
-    //   var stateRect3 =s.paper.group(s.paper.rect(75, 350,150,50,5,5).attr({
-    //     fill: "#ffa400"
-    //   }),s.paper.text(150, 380,'阻塞状态').attr({
-    //     fill: "#fff",
-    //     'font-weight': 100,
-    //     'font-size': 20,
-    //     'text-anchor': 'middle',
-    //   }))
-
-
-
-
-
-
-    //   stateRect1.click(function(){
-    //     runningToReady()
-    //   });
-    //   stateRect2.click(function(){
-    //     readyToRunning()
-    //   });
-    //   stateRect3.click(function(){
-    //     runningToBlocked()
-    //   });
-
-    //   function readyToRunning(){
-    //     bigCircle.attr({
-    //       cx: 375,
-    //       cy: 80,
-    //       fill:'#44cef6'
-    //     })
-    //     bigCircle.animate({
-    //       cx: 580,
-    //       cy: 280,
-    //       fill:'#9ed048'
-    //     }, 100);
-    //   }
-    //   function runningToReady(){
-    //     bigCircle.attr({
-    //       cx: 580,
-    //       cy: 280,
-    //       fill:'#9ed048'
-    //     })
-    //     bigCircle.animate({
-    //       cx: 375,
-    //       cy: 80,
-    //       fill:'#44cef6'
-    //     }, 100);
-    //   }
-    //   function runningToBlocked(){
-    //     bigCircle.attr({
-    //       cx: 580,
-    //       cy: 280,
-    //       fill:'#9ed048'
-    //     })
-    //     bigCircle.animate({
-    //       cx: 150,
-    //       cy: 280,
-    //       fill:'#ffa400'
-    //     }, 100);
-    //   }
-    //   function blockedToReady(){
-    //     bigCircle.attr({
-    //       cx: 150,
-    //       cy: 280,
-    //       fill:'#ffa400'
-    //     })
-    //     bigCircle.animate({
-    //       cx: 580,
-    //       cy: 280,
-    //       fill:'#9ed048'
-    //     }, 100);
-    //   }
-    // }
+    //       });
+          
+          
+    //       var stateRect1 =s.paper.group(s.paper.rect(300, 150,150,50,5,5).attr({
+    //       fill: "#44cef6"
+    //       }),s.paper.text(370, 180,'就绪状态').attr({
+    //       fill: "#fff",
+    //       'font-weight': 100,
+    //       'font-size': 20,
+    //       'text-anchor': 'middle',
+    //       })) 
+          
+          
+    //       var stateRect2 =s.paper.group(s.paper.rect(500, 350,150,50,5,5).attr({
+    //       fill: "#9ed048"
+    //       }),s.paper.text(570, 380,'运行状态').attr({
+    //       fill: "#fff",
+    //       'font-weight': 100,
+    //       'font-size': 20,
+    //       'text-anchor': 'middle',
+    //       })) 
+          
+          
+    //       var stateRect3 =s.paper.group(s.paper.rect(75, 350,150,50,5,5).attr({
+    //       fill: "#ffa400"
+    //       }),s.paper.text(150, 380,'阻塞状态').attr({
+    //       fill: "#fff",
+    //       'font-weight': 100,
+    //       'font-size': 20,
+    //       'text-anchor': 'middle',
+    //       }))
+          
+          
+          
+          
+          
+          
+    //       stateRect1.click(function(){
+    //       runningToReady()
+    //       });
+    //       stateRect2.click(function(){
+    //       readyToRunning()
+    //       });
+    //       stateRect3.click(function(){
+    //       runningToBlocked()
+    //       });
+          
+    //       function readyToRunning(){
+    //         bigCircle.attr({
+    //         cx: 375,
+    //         cy: 80,
+    //         fill:'#44cef6'
+    //         })
+    //         bigCircle.animate({
+    //         cx: 580,
+    //         cy: 280,
+    //         fill:'#9ed048'
+    //         }, 100);
+    //       }
+    //       function runningToReady(){
+    //         bigCircle.attr({
+    //         cx: 580,
+    //         cy: 280,
+    //         fill:'#9ed048'
+    //         })
+    //         bigCircle.animate({
+    //         cx: 375,
+    //         cy: 80,
+    //         fill:'#44cef6'
+    //         }, 100);
+    //       }
+    //       function runningToBlocked(){
+    //         bigCircle.attr({
+    //         cx: 580,
+    //         cy: 280,
+    //         fill:'#9ed048'
+    //         })
+    //         bigCircle.animate({
+    //         cx: 150,
+    //         cy: 280,
+    //         fill:'#ffa400'
+    //         }, 100);
+    //       }
+    //       function blockedToReady(){
+    //         bigCircle.attr({
+    //         cx: 150,
+    //         cy: 280,
+    //         fill:'#ffa400'
+    //         })
+    //         bigCircle.animate({
+    //         cx: 580,
+    //         cy: 280,
+    //         fill:'#9ed048'
+    //         }, 100);
+    //       }
+    //       }
     // courseStateSVG();
 
 </script>
@@ -188,7 +172,7 @@
     margin: 0 auto;  
     min-height: 300px;  
   }
-#appView {
+#svg {
     background: #4c8abd;  
     -moz-border-radius: 10px;  
     -webkit-border-radius: 10px;  

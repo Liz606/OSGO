@@ -69,7 +69,7 @@
     
                             <div class="title">进程的状态转换</div>
     
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
+                            <div class="content bgImg" style="background-image:url('../assets/images/courseState-mask.png')">
     
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
     
@@ -79,23 +79,7 @@
     
                     </v-link>
     
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
-    
-                        <div class="card">
-    
-                            <div class="title">进程同步</div>
-    
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-    
-                                <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
-    
-                            </div>
-    
-                        </div>
-    
-                    </v-link>
-    
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
+                    <v-link href="/courseSync" class="card-container col-xs-12 col-sm-6 col-md-4">
     
                         <div class="card">
     
@@ -111,23 +95,8 @@
     
                     </v-link>
     
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
     
-                        <div class="card">
-    
-                            <div class="title">处理机的高中低级调度</div>
-    
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-    
-                                <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
-    
-                            </div>
-    
-                        </div>
-    
-                    </v-link>
-    
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
+                    <v-link href="/FCFSchedul" class="card-container col-xs-12 col-sm-6 col-md-4">
     
                         <div class="card">
     
@@ -143,7 +112,7 @@
     
                     </v-link>
     
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
+                    <v-link href="/SJFSchedul" class="card-container col-xs-12 col-sm-6 col-md-4">
     
                         <div class="card">
     

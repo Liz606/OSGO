@@ -30,17 +30,17 @@
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 //     Underscore may be freely distributed under the MIT license.
-
+'use strict';
 (function() {
 
   // Baseline setup
   // --------------
-  var _root = this ;
-  // Establish the _root object, `window` in the browser, or `exports` on the server.
+  var root = this ;
+  // Establish the root object, `window` in the browser, or `exports` on the server.
   
 
   // Save the previous value of the `_` variable.
-  var previousUnderscore = _root._;
+  var previousUnderscore = root._;
 
   // Save bytes in the minified (but not gzipped) version:
   var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
@@ -79,9 +79,9 @@
   //   }
   //   exports._ = _;
   // } else {
-  //   _root._ = _;
+  //   root._ = _;
   // }
-  _root._ = _;
+  root._ = _;
   // Current version.
   _.VERSION = '1.8.3';
 
@@ -1303,7 +1303,7 @@
   // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
   // previous owner. Returns a reference to the Underscore object.
   _.noConflict = function() {
-    _root._ = previousUnderscore;
+    root._ = previousUnderscore;
     return this;
   };
 
@@ -1583,9 +1583,9 @@
 
 (function() {
 
-  var _root = this ;
-  var Backbone = _root.Backbone || {};
-  _root.Backbone = Backbone;
+  var root = this ;
+  var Backbone = root.Backbone || {};
+  root.Backbone = Backbone;
 
   var array = [];
   var slice = array.slice;
@@ -1731,7 +1731,7 @@
     }
     exports.Backbone = Backbone;
   } else {
-    _root.Backbone = Backbone;
+    root.Backbone = Backbone;
   }
 
   if (typeof define === 'function' && define.amd) {
@@ -1747,44 +1747,44 @@
  */
 
 (function() {
- var _root = this ;
+ var root = this ;
   
   var lastTime = 0;
   var vendors = ['ms', 'moz', 'webkit', 'o'];
 
-  for (var x = 0; x < vendors.length && !_root.requestAnimationFrame; ++x) {
-    _root.requestAnimationFrame = _root[vendors[x]+'RequestAnimationFrame'];
-    _root.cancelAnimationFrame =
-      _root[vendors[x]+'CancelAnimationFrame'] || _root[vendors[x]+'CancelRequestAnimationFrame'];
+  for (var x = 0; x < vendors.length && !root.requestAnimationFrame; ++x) {
+    root.requestAnimationFrame = root[vendors[x]+'RequestAnimationFrame'];
+    root.cancelAnimationFrame =
+      root[vendors[x]+'CancelAnimationFrame'] || root[vendors[x]+'CancelRequestAnimationFrame'];
   }
 
-  if (!_root.requestAnimationFrame)
-    _root.requestAnimationFrame = raf;
+  if (!root.requestAnimationFrame)
+    root.requestAnimationFrame = raf;
 
-  if (!_root.cancelAnimationFrame)
-    _root.cancelAnimationFrame = function(id) {
+  if (!root.cancelAnimationFrame)
+    root.cancelAnimationFrame = function(id) {
       clearTimeout(id);
     };
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = _root.requestAnimationFrame;
+      exports = module.exports = root.requestAnimationFrame;
     }
-    exports.requestAnimationFrame = _root.requestAnimationFrame;
+    exports.requestAnimationFrame = root.requestAnimationFrame;
   } else {
-    _root.requestAnimationFrame = _root.requestAnimationFrame;
+    root.requestAnimationFrame = root.requestAnimationFrame;
   }
 
   if (typeof define === 'function' && define.amd) {
     define('requestAnimationFrame', [], function() {
-      return _root.requestAnimationFrame;
+      return root.requestAnimationFrame;
     });
   }
 
   function raf(callback, element) {
     var currTime = new Date().getTime();
     var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-    var id = _root.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+    var id = root.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
     lastTime = currTime + timeToCall;
     return id;
   }
@@ -1836,7 +1836,7 @@ console.log(window.requestAnimationFrame);
 
     temp: document.createElement('div'),
 
-    hasEventListeners: _.isFunction(_root.addEventListener),
+    hasEventListeners: _.isFunction(window.addEventListener),
 
     bind: function(elem, event, func, bool) {
       if (this.hasEventListeners) {
@@ -1913,7 +1913,7 @@ console.log(window.requestAnimationFrame);
         bottom: 0,
         position: 'fixed'
       });
-      dom.bind(_root, 'resize', fitted);
+      dom.bind(window, 'resize', fitted);
       fitted();
 
 
@@ -1937,7 +1937,7 @@ console.log(window.requestAnimationFrame);
      * Primitive
      */
 
-    Array: _root.Float32Array || Array,
+    Array: window.Float32Array || Array,
 
     Types: {
       webgl: 'WebGLRenderer',
@@ -2117,7 +2117,7 @@ console.log(window.requestAnimationFrame);
        * http://www.html5rocks.com/en/tutorials/canvas/hidpi/
        */
 
-      devicePixelRatio: _root.devicePixelRatio || 1,
+      devicePixelRatio: window.devicePixelRatio || 1,
 
       getBackingStoreRatio: function(ctx) {
         return ctx.webkitBackingStorePixelRatio ||
@@ -3757,25 +3757,25 @@ console.log(window.requestAnimationFrame);
   }
 
   function getNow() {
-    return ((_root.performance && _root.performance.now)
-      ? _root.performance : Date).now();
+    return ((window.performance && window.performance.now)
+      ? window.performance : Date).now();
   }
 
   // Request Animation Frame
 
-  (function() {
+  // (function() {
 
-    requestAnimationFrame(arguments.callee);
+  //   requestAnimationFrame(arguments.callee);
 
-    Two.Instances.forEach(function(t) {
+  //   Two.Instances.forEach(function(t) {
 
-      if (t.playing) {
-        t.update();
-      }
+  //     if (t.playing) {
+  //       t.update();
+  //     }
 
-    });
+  //   });
 
-  })();
+  // })();
 
   //exports to multiple environments
   if (typeof define === 'function' && define.amd)
@@ -4845,14 +4845,14 @@ console.log(window.requestAnimationFrame);
 
       if (!clip) {
 
-        var _root = shape;
+        var __root = shape;
 
-        while (_root.parent) {
-          _root = _root.parent;
+        while (__root.parent) {
+          __root = __root.parent;
         }
 
         clip = shape._renderer.clip = svg.createElement('clipPath');
-        _root.defs.appendChild(clip);
+        __root.defs.appendChild(clip);
 
       }
 

@@ -888,6 +888,8 @@ Snap.version = "0.5.1";
  = (object) @Element
 \*/
 function Snap(w, h) {
+        console.log(typeof w)
+    console.log(w,h)
     if (w) {
         if (w.nodeType) {
             return wrap(w);
@@ -898,9 +900,15 @@ function Snap(w, h) {
         if (w instanceof Element) {
             return w;
         }
+        console.log(w instanceof Element)
         if (h == null) {
             try {
+                console.log(glob)
+                console.log(glob.doc)
+                console.log(glob.doc.querySelector)
                 w = glob.doc.querySelector(String(w));
+
+                console.log(wrap(w), 1111)
                 return wrap(w);
             } catch (e) {
                 return null;
