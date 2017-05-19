@@ -143,6 +143,12 @@
               stroke: "#ffffff",
               strokeWidth: 1
           });
+
+          var hr = s.paper.rect(200 ,20,0,20).attr({
+              fill: "#ffffff",
+              stroke: "#ffffff",
+              strokeWidth: 1
+          });
           function S1Active(){
             _S1.animate({
               cx:'75',

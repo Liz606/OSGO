@@ -29,10 +29,9 @@
 
 <script>
     import Vue from 'vue'
-  	import MainLayout from '../layouts/View.vue'
+    import MainLayout from '../layouts/View.vue'
     import VLink from '../components/VLink.vue'
-  	import '../assets/snap/snap.svg.0.5.1.js'
-    import $ from '../assets/jquery/jquery.js'
+    import '../assets/snap/snap.svg.0.5.1.js'
   	export default {
   	  components: {
   	    MainLayout,
@@ -40,7 +39,6 @@
   	  },
       mounted:function (){
         function CourseState(){
-
           var s = Snap("#svg");
           s.clear();
           //进程调度

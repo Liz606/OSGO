@@ -3,62 +3,6 @@
     
         <div class="content-container">
     
-            <!-- <article id="85" class="post tag-about-ghost tag-release featured">
-        
-        		    <div class="featured" title="推荐文章">
-        
-        		        <span class="glyphicon glyphicon-star"></span>
-        
-        		    </div>
-        
-        
-        
-        		    <div class="post-head">
-        
-        		        <h1 class="post-title"><a href="/ghost-0-6-3-released/">Ghost 0.6.3 版本正式发布</a></h1>
-        
-        		        <div class="post-meta">
-        
-        		            <span class="author">作者：<a href="/author/wangsai/">王赛</a></span> •
-        
-        		            <time class="post-date" datetime="2015年5月18日星期一凌晨3点30分" title="2015年5月18日星期一凌晨3点30分">2015年5月18日</time>
-        
-        		        </div>
-        
-        		    </div>
-        
-        		    <div class="post-content">
-        
-        		        <p>Ghost 0.6.3 版本已经正式发布了！此版本主要修复了一些 bug 并包含了几个新特性，例如：博文预览。 Ghost 0.6.3 的主要变化 [新增] 博文预览 [新增] 带密码保护的私密博客 [新增] 为作者自定义页面模板 [增强] 登陆状态延长至 7 天 [修复] 编辑</p>
-        
-        		    </div>
-        
-        		    <div class="post-permalink">
-        
-        		        <a href="/ghost-0-6-3-released/" class="btn btn-default">阅读全文</a>
-        
-        		    </div>
-        
-        
-        
-        		    <footer class="post-footer clearfix">
-        
-        		        <div class="pull-left tag-list">
-        
-        		            <i class="fa fa-folder-open-o"></i>
-        
-        		            <a href="/tag/about-ghost/">Ghost</a>, <a href="/tag/release/">新版本发布</a>
-        
-        		        </div>
-        
-        		        <div class="pull-right share">
-        
-        		        </div>
-        
-        		    </footer>
-        
-        		</article> -->
-    
             <div class="contanier-fluid">
     
                 <div class="row">
@@ -69,8 +13,8 @@
     
                             <div class="title">进程的状态转换</div>
     
-                            <div class="content bgImg" style="background-image:url('../assets/images/courseState-mask.png')">
-    
+                            <div class="content">
+                                <img src="../assets/images/courseState-mask.png" height="424" width="618" alt="">
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
     
                             </div>
@@ -85,8 +29,8 @@
     
                             <div class="title">信号量机制</div>
     
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-    
+                            <div class="content">
+                                <img src="../assets/images/courseSync-mask.png" height="424" width="618" alt="">
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
     
                             </div>
@@ -102,8 +46,8 @@
     
                             <div class="title">先来先服务调度算法</div>
     
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-    
+                            <div class="content">
+                                <img src="../assets/images/FCFSchedul-mask.png" height="364" width="582" alt="">
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
     
                             </div>
@@ -118,8 +62,8 @@
     
                             <div class="title">短作业优先调度算法</div>
     
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-    
+                            <div class="content">
+                                <img src="../assets/images/SJFSchedul-mask.png" height="392" width="627" alt="">
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
     
                             </div>
@@ -358,12 +302,11 @@ export default {
     height: 100%;
 }
 
-
-
-.card:hover .content {
-
-    background-size: 120% 120%;
+.card .content img{
+    width: 100%;
+    height: 100%;
 }
+
 
 
 
