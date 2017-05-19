@@ -36,7 +36,9 @@
         VLink
       },
       mounted:function () {
-        var s = Snap("#svg");
+        CourseSync();
+        function CourseSync() {
+          var s = Snap("#svg");
           s.clear();
           var Snum = 2;
           var SR = 25;
@@ -199,6 +201,7 @@
             })
           }
         }
+      }
     }
 
   

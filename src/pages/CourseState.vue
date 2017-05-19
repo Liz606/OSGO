@@ -38,6 +38,7 @@
   	    VLink
   	  },
       mounted:function (){
+        CourseState();
         function CourseState(){
           var s = Snap("#svg");
           s.clear();
@@ -153,7 +154,6 @@
             }, 100);
           }
         }
-        CourseState();
       }
   	}
 

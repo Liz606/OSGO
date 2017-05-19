@@ -34,173 +34,176 @@
   	    VLink
   	  },
       mounted:function(){
-          var s = Snap("#svg");
-          s.clear();
-          var prosess = s.paper.text(80,50,'进程').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          var arrivedTime = s.paper.text(180,50,'到达时间').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          var runningTime = s.paper.text(280,50,'运行时间').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          //到达时间
-          s.paper.text(180,100,'0').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,160,'5').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,230,'6').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          //运行时间
-          s.paper.text(280,100,'20').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,160,'10').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,230,'5').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
+        FCFSchedul();
+        function FCFSchedul(){
+            var s = Snap("#svg");
+            s.clear();
+            var prosess = s.paper.text(80,50,'进程').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            var arrivedTime = s.paper.text(180,50,'到达时间').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            var runningTime = s.paper.text(280,50,'运行时间').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            //到达时间
+            s.paper.text(180,100,'0').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(180,160,'5').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(180,230,'6').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            //运行时间
+            s.paper.text(280,100,'20').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(280,160,'10').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(280,230,'5').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
 
-          var _S1 = s.paper.circle(100, 90, 25).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S2 = s.paper.circle(100, 160, 25).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S3 = s.paper.circle(100, 230, 25).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 90, 25).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 160, 25).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 230, 25).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          //CPU
-          var CUPRect = s.paper.rect(75 ,350,600,20).attr({
-                fill: "#d6ecf0",
+            var _S1 = s.paper.circle(100, 90, 25).attr({
+                fill: "#44cef6",
+                stroke: "#ffffff",
+                strokeWidth: 5
+            });
+            var _S2 = s.paper.circle(100, 160, 25).attr({
+                fill: "#9ed048",
+                stroke: "#ffffff",
+                strokeWidth: 5
+            });
+            var _S3 = s.paper.circle(100, 230, 25).attr({
+                fill: "#ffa400",
+                stroke: "#ffffff",
+                strokeWidth: 5
+            });
+            s.paper.circle(100, 90, 25).attr({
+                fill: "#44cef6",
+                stroke: "#ffffff",
+                strokeWidth: 5
+            });
+            s.paper.circle(100, 160, 25).attr({
+                fill: "#9ed048",
+                stroke: "#ffffff",
+                strokeWidth: 5
+            });
+            s.paper.circle(100, 230, 25).attr({
+                fill: "#ffa400",
+                stroke: "#ffffff",
+                strokeWidth: 5
+            });
+            //CPU
+            var CUPRect = s.paper.rect(75 ,350,600,20).attr({
+                  fill: "#d6ecf0",
+                  stroke: "#ffffff",
+                  strokeWidth: 1
+              });
+            s.paper.text(75,390,'0').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(417,390,'20').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(575,390,'30').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            s.paper.text(663,390,'35').attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+
+            var _S1Rect = s.paper.rect(75 ,350,0,20).attr({
+                fill: "#44cef6",
                 stroke: "#ffffff",
                 strokeWidth: 1
             });
-          s.paper.text(75,390,'0').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(417,390,'20').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(575,390,'30').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(663,390,'35').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
+            var _S2Rect = s.paper.rect(417 ,350,0,20).attr({
+                fill: "#9ed048",
+                stroke: "#ffffff",
+                strokeWidth: 1
+            });
+            var _S3Rect = s.paper.rect(576 ,350,0,20).attr({
+                fill: "#ffa400",
+                stroke: "#ffffff",
+                strokeWidth: 1
+            });
 
-          var _S1Rect = s.paper.rect(75 ,350,0,20).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S2Rect = s.paper.rect(417 ,350,0,20).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S3Rect = s.paper.rect(576 ,350,0,20).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-
-          var hr = s.paper.rect(200 ,20,0,20).attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          function S1Active(){
-            _S1.animate({
-              cx:'75',
-              cy:'320'
-            },500,function(){
-              _S1Rect.animate({
-                width:'342'
-              },3000)
+            var hr = s.paper.rect(200 ,20,0,20).attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+                strokeWidth: 1
+            });
+            function S1Active(){
               _S1.animate({
+                cx:'75',
+                cy:'320'
+              },500,function(){
+                _S1Rect.animate({
+                  width:'342'
+                },3000)
+                _S1.animate({
+                  cx:'417'
+                },3000,function(){
+                  S2Active();
+                })
+              })
+            }
+            function S2Active(){
+              _S2.attr({
                 cx:'417'
-              },3000,function(){
-                S2Active();
               })
-            })
-          }
-          function S2Active(){
-            _S2.attr({
-              cx:'417'
-            })
-            _S2Rect.animate({
-                width:'157'
-              },2000)
-              _S2.animate({
+              _S2Rect.animate({
+                  width:'157'
+                },2000)
+                _S2.animate({
+                  cx:'576'
+                },2000,function(){
+                  S3Active();
+                })
+            }
+            function S3Active(){
+              _S3.attr({
                 cx:'576'
-              },2000,function(){
-                S3Active();
               })
+              _S3Rect.animate({
+                width:'97'
+              },1000)
+              _S3.animate({
+                cx:'675'
+              },1000)
+            }
+            setTimeout(S1Active,5000);
+            setTimeout(function(){
+              _S2.animate({
+                cx:'100',
+                cy:'320'
+              },500)
+            },5500);
+            setTimeout(function(){
+              _S3.animate({
+                cx:'120',
+                cy:'320'
+              },500)
+            },6000);
           }
-          function S3Active(){
-            _S3.attr({
-              cx:'576'
-            })
-            _S3Rect.animate({
-              width:'97'
-            },1000)
-            _S3.animate({
-              cx:'675'
-            },1000)
-          }
-          setTimeout(S1Active,5000);
-          setTimeout(function(){
-            _S2.animate({
-              cx:'100',
-              cy:'320'
-            },500)
-          },5500);
-          setTimeout(function(){
-            _S3.animate({
-              cx:'120',
-              cy:'320'
-            },500)
-          },6000);
         }
   	}
 

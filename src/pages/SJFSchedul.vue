@@ -35,6 +35,8 @@
   	  },
       mounted:function(){
         var s = new Snap('#svg');
+        //SNPFSchedulSVG();
+        SNPFSchedulSVG();
         function SNPFSchedulSVG(){
           s.clear();
           var prosess = s.paper.text(80,50,'进程').attr({
@@ -243,7 +245,6 @@
             },500)
           },7000);
         }
-        //SNPFSchedulSVG();
         function SPFSchedulSVG(){
           s.clear();
           var prosess = s.paper.text(80,50,'进程').attr({
@@ -494,8 +495,7 @@
             },300)
           },4500);
         }
-        SPFSchedulSVG();
-      }
+      } 
   	}
 
     
