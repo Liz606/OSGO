@@ -16,7 +16,19 @@
               </blockquote>
             </div>
           </div>
+          
           <div class="svg-container col-xs-12 col-md-8">
+            <div class="input-group" id="">
+              <label class="input-group-addon"  for="InputEnd1">输入进程参数</label>
+              <input type="text" class="form-control" id="InputEnd1" placeholder="[1,2],[2,3],[0,2]" value="[1,2],[2,3],[0,2]">
+              <label class="input-group-addon"  for="InputEnd2">输入信号量个数</label>
+              <input type="text" class="form-control" id="InputEnd2" placeholder="请输入数字" value="2">
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="updateParams" type="button">提交</button>
+              </span>
+            </div>
+            
+            <p>一个数组为一个进程，数组第一个参数表示进程请求临界资源时刻，第二个参数表示进程预估使用临界资源时长。</p>
             <svg id="svg"></svg>
           </div>
         </div>
@@ -30,188 +42,205 @@
   	import MainLayout from '../layouts/View.vue'
     import VLink from '../components/VLink.vue'
     import '../assets/snap/snap.svg.0.5.1.js'
+    import _ from '../assets/lodash/lodash.min.js'
+    import $ from '../assets/jquery/jquery.js'
     export default {
       components: {
         MainLayout,
         VLink
       },
       mounted:function () {
-        CourseSync();
-        function CourseSync() {
+        window.onload = () => {
           var s = Snap("#svg");
-          s.clear();
-          var Snum = 2;
-          var SR = 25;
-          var SPadding = 20;
-          var _SContainer = s.paper.rect((800 - Snum * 50 - 60) / 2, 50, Snum * 50 + SPadding * 3, SR * 2 + 30).attr({
-            fill: 'rgba(255,255,255,.3)',
-            stroke: "#ffffff",
-            strokeWidth: 5
+          CourseSync(s);
+          $('#updateParams').click(function(){
+            CourseSync(s);
           })
-          var _S1 = s.paper.circle((800 - Snum * 50 - 60) / 2 + SR + SPadding, 90, 25).attr({
-            fill: "#44cef6",
-            stroke: "#ffffff",
-            strokeWidth: 5
-          });
-          var _S2 = s.paper.circle((800 - Snum * 50 - 60) / 2 + SR * 3 + SPadding * 2, 90, 25).attr({
-            fill: "#44cef6", 
-            stroke: "#ffffff",
-            strokeWidth: 5
-          });
-
-          var M = new Snap.Matrix();
-          var P1_SyncRect1 = s.paper.group(s.paper.rect(75, 190, 150, 50, 5, 5).attr({
-            fill: "#44cef6"
-          }), s.paper.text(150, 220, 'wait(S)').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          var P1_SyncRect2 = s.paper.group(s.paper.rect(75, 245, 150, 50, 5, 5).attr({
-            fill: "#9ed048"
-          }), s.paper.text(150, 275, 'critical section').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          var P1_SyncRect3 = s.paper.group(s.paper.rect(75, 300, 150, 50, 5, 5).attr({
-            fill: "#ffa400"
-          }), s.paper.text(150, 330, 'signal(S)').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          M.translate(50, 0);
-          var P1 = s.paper.group(P1_SyncRect1, P1_SyncRect2, P1_SyncRect3).attr({
-            fill: 'rgba(255,255,255,.3)',
-            stroke: "#ffffff",
-            strokeWidth: 1
-          }).transform(M);
-
-
-
-
-          var P2_SyncRect1 = s.paper.group(s.paper.rect(75, 190, 150, 50, 5, 5).attr({
-            fill: "#44cef6"
-          }), s.paper.text(150, 220, 'wait(S)').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          var P2_SyncRect2 = s.paper.group(s.paper.rect(75, 245, 150, 50, 5, 5).attr({
-            fill: "#9ed048"
-          }), s.paper.text(150, 275, 'critical section').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          var P2_SyncRect3 = s.paper.group(s.paper.rect(75, 300, 150, 50, 5, 5).attr({
-            fill: "#ffa400"
-          }), s.paper.text(150, 330, 'signal(S)').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-
-          M.translate(200, 0);
-          var P2 = s.paper.group(P2_SyncRect1, P2_SyncRect2, P2_SyncRect3).attr({
-            fill: 'rgba(255,255,255,.3)',
-            stroke: "#ffffff",
-            strokeWidth: 1
-          }).transform(M)
-
-
-
-
-          var P3_SyncRect1 = s.paper.group(s.paper.rect(75, 190, 150, 50, 5, 5).attr({
-            fill: "#44cef6"
-          }), s.paper.text(150, 220, 'wait(S)').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          var P3_SyncRect2 = s.paper.group(s.paper.rect(75, 245, 150, 50, 5, 5).attr({
-            fill: "#9ed048"
-          }), s.paper.text(150, 275, 'critical section').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          var P3_SyncRect3 = s.paper.group(s.paper.rect(75, 300, 150, 50, 5, 5).attr({
-            fill: "#ffa400"
-          }), s.paper.text(150, 330, 'signal(S)').attr({
-            fill: "#fff",
-            'font-weight': 100,
-            'font-size': 20,
-            'text-anchor': 'middle',
-          }))
-          M.translate(200, 0);
-          var P3 = s.paper.group(P3_SyncRect1, P3_SyncRect2, P3_SyncRect3).attr({
-            fill: 'rgba(255,255,255,.3)',
-            stroke: "#ffffff",
-            strokeWidth: 1
-          }).transform(M);
-
-          _S1.animate({
-            cx: '200',
-            cy: '215'
-          }, 1000, function() {
-            animateS2();
-            P1_SyncRect1.animate({
-              'fill-opacity': 0
-            }, 500, function() {
-              _S1.animate({
-                cx: '200',
-                cy: '270'
-              }, 1000, function() {
-                P1_SyncRect2.animate({
-                  'fill-opacity': 0
-                }, 500)
-              })
-            })
-          })
-
-          function animateS2() {
-            _S2.animate({
-              cx: '600',
-              cy: '215'
-            }, 2000, function() {
-              P3_SyncRect1.animate({
-                'fill-opacity': 0
-              }, 500, function() {
-                _S2.animate({
-                  cx: '600',
-                  cy: '270'
-                }, 1000, function() {
-                  P3_SyncRect2.animate({
-                    'fill-opacity': 0
-                  }, 500, function() {
-
-                  })
-                })
-              })
-            })
-          }
         }
       }
     }
+    function getArrStr(){
+      var tempCourseInfo =$('#InputEnd1').val();
+      if(tempCourseInfo){
+        tempCourseInfo =_.drop(_.split(tempCourseInfo,'['));
+        for(var j=0;j<tempCourseInfo.length;j++){
+           if(j<tempCourseInfo.length-1){
+            tempCourseInfo[j] = tempCourseInfo[j].slice(0,-2).split(',');
+          }else{
+            tempCourseInfo[j] = tempCourseInfo[j].slice(0,-1).split(',');
+          }
+        }
+      }
+      return tempCourseInfo;
+    }
+    function CourseSync(s){
+      s.clear();
+      var sNum = $('#InputEnd2').val()||2;
+      console.log(getArrStr());
+      var courseInfo = getArrStr()||[[1,2],[2,3],[0,2]];//到达时间，预估使用时长
+      console.log(courseInfo)
+      var courseObj = [];
+      _.map(courseInfo,function(obj,index){
+        var tempObj = {};
+        tempObj.start = obj[0];
+        tempObj.use = obj[1];
+        tempObj.name = 'p'+(index+1);
+        courseObj.push(tempObj);
+      })
+     var sObj = renderSView(s,sNum);
+     courseObj = renderCVive(s,courseObj);
+     courseObj =  _.reverse(_.sortBy(courseObj, function(o) { return _.parseInt(o.start,10); }));
+     
+     var corretTime = 0;
 
-  
+     var clickBtnRect = s.paper.group(s.paper.path('M70 425 L95 440 L70 455  Z').attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 1
+          }),s.paper.circle(80, 440,25).attr({
+          fill: "transparent",
+          stroke: "#ffffff",
+          strokeWidth: 5
+        }));
+      clickBtnRect.click(function(){
+        if(sObj.length>0&&courseObj.length>0){
+          requstS(s,courseObj.pop(),sObj);
+        }else if(sObj.length<=0){
+           var tempText = s.paper.text(100,100,'信号量不足').attr({
+             'fill': "#fff",
+            'font-weight': 100,
+            'font-size': 20,
+            'text-anchor': 'middle',
+           }).animate({
+            fil:'transparent'
+          },500,function(){
+            tempText.remove();
+          })
+        }else if(courseObj.length<=0){
+          CourseSync(s)
+        } 
+      });
+    }
+    //请求信号量
+    //发出请求进程：cObj
+    //信号量对象：sObj
+    function requstS(s,cObj,sObj){
+      if(sObj.length>0){
+        var _s = sObj.pop();
+        //如果还有可用信号量
+        if(_s){
+          //分配信号量
+          _s.animate({
+            cx:cObj.X+cObj.width/2,
+            cy:cObj.waitCY+cObj.height/2
+          },500,function(){
+            //等待执行结束
+            cObj.waitRect[0].attr({
+              fill:'rgba(255,255,255,.3)',
+            })
+            //进入临界区
+            _s.attr({
+              cy:cObj.criticalCY+cObj.height/2
+            })
+            //使用临界区结束
+            cObj.criticalRect[0].animate({
+                fill:'rgba(255,255,255,.3)',
+              },cObj.use*1000,function(){
+                //执行signal
+                _s.animate({
+                  cy:cObj.signalCY+cObj.height/2
+                },500,function(){
+                  //执行signal结束
+                  cObj.signalRect[0].attr({
+                    fill:'rgba(255,255,255,.3)',
+                  });
+                  //回收信号量
+                   _s.animate({
+                    cx:_s._x,
+                    cy:_s._y
+                  },500,function(){
+                    sObj.push(_s);
+                  })
+                })
+              })
+          })
+        }
+      }
+    }
+    //渲染信号量
+    function renderSView(s,sN){
+      var SR = 25;
+      var SPadding = 20;
+      var _SContainer = s.paper.rect((800 - sN * 50 - 60) / 2, 50, sN * 50 + SPadding * 3, SR * 2 + 30).attr({
+        fill: 'rgba(255,255,255,.3)',
+        stroke: "#ffffff",
+        strokeWidth: 5
+      })
+      var sObj = [];
+      for(var i = 0;i<sN;i++){
+        var _x = (800 - sN * 50 - 60) / 2 + (i+1)*50+i*10;
+        var _y = 85;
+        var temp = s.paper.circle(_x, _y,25).attr({
+          fill: "#44cef6",
+          stroke: "#ffffff",
+          strokeWidth: 5
+        });
+        temp._x = _x;
+        temp._y = _y;
+        sObj.push(temp);
+      }
+      return sObj;
+    }
+    //渲染进程块
+    function renderCVive(s,courseObj){
+      _.map(courseObj,function(valObj,index){
+        valObj.X = (800 - courseObj.length * 190)/2 + index*190;
+        valObj.nameText = s.paper.text(valObj.X + 80, 170, valObj.name).attr({
+          fill: "#fff",
+          'font-weight': 100,
+          'font-size': 20,
+          'text-anchor': 'middle',
+        })
+        valObj.width = 150;
+        valObj.height = 50;
+        valObj.waitCY = 190;
+        valObj.waitRect = s.paper.group(s.paper.rect(valObj.X, valObj.waitCY, valObj.width, valObj.height, 5, 5).attr({
+          fill: "#44cef6"
+        }), s.paper.text(valObj.X + 80, valObj.waitCY+30, 'wait(S)').attr({
+          fill: "#fff",
+          'font-weight': 100,
+          'font-size': 20,
+          'text-anchor': 'middle',
+        }))
+        valObj.criticalCY = 245;
+        valObj.criticalRect = s.paper.group(s.paper.rect(valObj.X, valObj.criticalCY, valObj.width, valObj.height, 5, 5).attr({
+          fill: "#9ed048"
+        }), s.paper.text(valObj.X + 80, valObj.criticalCY+30, 'critical section').attr({
+          fill: "#fff",
+          'font-weight': 100,
+          'font-size': 20,
+          'text-anchor': 'middle',
+        }))
+        valObj.signalCY = 300;
+        valObj.signalRect = s.paper.group(s.paper.rect(valObj.X, valObj.signalCY, valObj.width, valObj.height, 5, 5).attr({
+          fill: "#ffa400"
+        }), s.paper.text(valObj.X + 80, valObj.signalCY+30, 'signal(S)').attr({
+          fill: "#fff",
+          'font-weight': 100,
+          'font-size': 20,
+          'text-anchor': 'middle',
+        }))
+      })
+      return courseObj;
+    }
+    
 
 </script>
 <style scoped>
   .content-container {
     width: 100%;    
     max-width: 1024px;  
-    margin: 0 auto;  
+    margin: 0 auto;   
     min-height: 300px;  
   }
 #svg {

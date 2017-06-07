@@ -5,13 +5,10 @@
         <div class="row">
           <div class="col-xs-12 col-md-4">
             <div class="illustrate-container">
-              <div class="title">处理机调度——先来先服务（FCFS）</div>
+              <div class="title">处理机调度——高响应比优先（HRRN）</div>
               <blockquote>
-                <p>
-                  处理机调度负责动态地把处理器分配给进程或内核级线程。处理机调度也称CPU调度或进程调度，在有线程的操作系统中也称线程调度。为了最大限度的提高CPU 利用率，多道程序设计的目标是保持总是有进程可供执行。在单处理机系统中，一次只能运行一个进程；其它的任何进程都必须等到CPU 空闲时才能够被重新调度。
-                </p>
-                <p>先来先服务（First Come First Served，FCFS）调度算法是按照进程进入就绪队列的先后次序来挑选进程，先进入就绪队列的进程优先被挑中。先来先服务调度算法是最简单的调度算法，但是它会让短进程等待非常长的进程。FCFS会产生所谓的Belady异常现象。</p>
-              </blockquote>
+                高响应比优先（Highest Response Ratio Next，HRRN）调度算法计算就绪队列进程的响应，调度时总是选择响应比最高的就绪进程得到CPU。响应比=（进程已等待时间＋进程要求运行时间）／进程要求运行时间。此调度算法首先有利于短进程，但也兼顾到等待时间长的进程，该算法是FCFS算法和SJF算法的折衷。
+             </blockquote>
             </div>
           </div>
           <div class="svg-container col-xs-12 col-md-8">
@@ -45,14 +42,14 @@
   	    VLink
   	  },
       mounted:function(){
-        window.onload = () => {
-          var s = Snap("#svg");
-          FCFSchedul(s);
-          $('#updateParams').click(function(){
-            FCFSchedul(s);
-          })
-        }
-      }
+          window.onload = () => {
+            var s = new Snap('#svg');
+            hightResponseSVG(s);
+            $('#updateParams').click(function(){
+              hightResponseSVG(s);
+            })
+          }
+        } 
   	}
     function renderView(s,n,a1,a2){
       s.clear();
@@ -63,6 +60,10 @@
       var colors = ['#44cef6','#9ed048','#ffa400','#f47983']
       var P = [];
       s.paper.text(80,row-row/2,'进程').attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+      });
+      s.paper.text(180,row-row/2,'到达时间').attr({
           fill: "#ffffff",
           stroke: "#ffffff",
       });
@@ -83,6 +84,12 @@
                 fill: "#ffffff",
                 stroke: "#ffffff",
             });
+            
+            //到达时间
+            s.paper.text(col+tCol,row,obj.arriveTime).attr({
+              fill: "#ffffff",
+              stroke: "#ffffff",
+            })
             //运行时间
             s.paper.text(col+tCol*2,row,obj.runTime).attr({
                 fill: "#ffffff",
@@ -95,69 +102,27 @@
     }
     function renderCPU(s,p){
       var y = p[p.length-1].y+200;
-      
-      var CUPRect = s.paper.rect(75 ,y,600,20).attr({
-            fill: "#d6ecf0",
-            stroke: "#ffffff",
-            strokeWidth: 1
-        });
-        s.paper.text(75,y+40,'0').attr({
-            fill: "#ffffff",
-            stroke: "#ffffff",
-        });
-      var allTime = 0;
       _.map(p,function(val){
+         val.y=y;
          val.arriveTime = _.parseInt(val.arriveTime);
          val.runTime = _.parseInt(val.runTime);
-         allTime+=val.runTime;
        });
-      //p =  _.orderBy(p,['arriveTime'],['asc']);
-      var curretTime = 0;
-      var readyItem = '';
-      var plantReadyTime = '(';
-      _.map(p,function(val){
-        val.y=y;
-        val.left = 75+curretTime*(600/allTime);
-        val.right = 75+(curretTime+val.runTime)*(600/allTime);
-        curretTime+=val.runTime;
-        val.width = val.right-val.left;
-        s.paper.text(val.right,y+40,curretTime).attr({
-            fill: "#ffffff",
-            stroke: "#ffffff",
-        });
-        val.Rect = s.paper.rect(val.left ,370,0,20).attr({
-            fill: val.color,
-            stroke: "#ffffff",
-            strokeWidth: 1
-        });
-        val.circle = s.paper.circle(val.left, y-30,25).attr({
-          fill: "transparent",
-          stroke: "#ffffff",
-          strokeWidth: 0
-        });
-        val.curretTime = curretTime;
-        readyItem += val.name+ ' = ' +val.curretTime+";";
-        plantReadyTime += val.curretTime + '+';
-      })
-      plantReadyTime = plantReadyTime.substring(0,plantReadyTime.length-1)+') = '+allTime/p.length;
+      p =  _.orderBy(p,['arriveTime'],['asc']);
       s.paper.rect(375,20,2,y-200).attr({
             fill: "#44cef6",
             stroke: "#ffffff",
             strokeWidth: 1
         });
       s.paper.text(390,60,'等待时间:').attr({
-        fill:'#ffffff'
-      })
-      
-      s.paper.text(390,80,readyItem).attr({
-        fill:'#ffffff'
-      })
+        fill: "#fff",
+        'font-weight': 100,
+        'font-size': 16, 
+        });
       s.paper.text(390,140,'平均等待时间:').attr({
-        fill:'#ffffff'
-      })
-      s.paper.text(390,160,plantReadyTime).attr({
-        fill:'#ffffff'
-      })
+        fill: "#fff",
+        'font-weight': 100,
+        'font-size': 16, 
+        });
       return p;
     }
     function getArrStr(){
@@ -174,11 +139,9 @@
       }
       return tempCourseInfo;
     }
-    function FCFSchedul(s){
+    function hightResponseSVG(s){
       s.clear();
       var n = 4;
-
-
       var coursesArr = getArrStr();
       var a1 = [];
       var a2 = [];
@@ -187,17 +150,13 @@
         a2.push(_.toString(val[1]));
       })
       
-      
-
       var Ps = renderView(s,n,a1,a2);
       Ps = renderCPU(s,Ps);
-      console.table(Ps)
-      var triangle = s.paper.path('M70 425 L95 440 L70 455  Z').attr({
+      var clickBtnRect = s.paper.group(s.paper.path('M70 425 L95 440 L70 455  Z').attr({
             fill: "#44cef6",
             stroke: "#ffffff",
             strokeWidth: 1
-          })
-      var clickBtnRect = s.paper.group(triangle,s.paper.circle(80, 440,25).attr({
+          }),s.paper.circle(80, 440,25).attr({
           fill: "transparent",
           stroke: "#ffffff",
           strokeWidth: 5
@@ -205,30 +164,57 @@
       var isAnimate = false;
       var pObjs = _.cloneDeep(Ps)
         pObjs = _.reverse(pObjs);
-
+      var corretTime = 0;
+      var backPObjs=[];
+      pObjs.status = 1
         //事件队列
         clickBtnRect.click(function(){
           if(!isAnimate){
-            if(pObjs.length > 0){
-                Active(pObjs.pop())
-            }else{
-              pObjs = _.cloneDeep(Ps);
-              pObjs = _.reverse(pObjs);
-              _.map(Ps,function(val){
-                val.Rect.attr({
-                  width:0
-                });
-                val.circle.attr({
-                  cx:val.left,
-                  fill:'transparent',
-                  strokeWidth: 0
-                });
+            if(pObjs.length > 0&&pObjs.status==1){
+                //根据corretTime更新pObjs
+              //更新进程列表
+              pObjs = updatePObjs(corretTime);
+              backPObjs.push(Active(pObjs.pop()))
+            }else if(pObjs.length == 0&&pObjs.status==1){
+              pObjs.status=2
+              //等待时间
+              var readyItem = "";
+              var plantReadyTime = "(";
+              var allTime = 0;
+              _.map(backPObjs,function(val){
+                readyItem+= val.name+ ' = ' +val.readyTime+";";
+                plantReadyTime += val.readyTime + '+';
+                allTime += val.readyTime;
               })
+              plantReadyTime =  plantReadyTime.substring(0,plantReadyTime.length-1)+")/"+backPObjs.length+'='+allTime/backPObjs.length;
+              backPObjs.readyItem = s.paper.text(390,80,readyItem).attr({
+                fill:'#ffffff'
+              })
+              //平均等待时间
+              backPObjs.plantReadyTime = s.paper.text(390,160,plantReadyTime).attr({
+                fill:'#ffffff'
+              })
+            }else if(pObjs.length==0&&pObjs.status==2){
+              //重置
+              
+              _.map(backPObjs,function(val){
+                val.Rect.remove();
+                val.circle.remove();
+                val.text.remove();
+                if(val.firstText){
+                  val.firstText.remove();
+                }
+              })
+              backPObjs.readyItem.remove();
+              backPObjs.plantReadyTime.remove();
+              pObjs = _.reverse(_.cloneDeep(Ps));
+              corretTime=0;
+              pObjs.status=1;
             }
           }
         })
         function Active(pObj){
-           isAnimate = true;
+           renderUse(pObj);
             pObj.Rect.animate({
               width:pObj.width
             },pObj.runTime*100,function(){
@@ -242,6 +228,52 @@
             },pObj.runTime*100,function(){
               isAnimate =false;
             })
+            return pObj;
+        }
+        function updatePObjs(time){
+          var temp = [];
+          //得到已经到达的进程
+          _.map(pObjs,function(valObj){
+            if(valObj.arriveTime<time){
+              valObj.hightResponse = (time-valObj.arriveTime+valObj.runTime)/valObj.runTime
+              temp.push(valObj);
+            }
+          })
+          //对已经到达的进程按照预估时间大小进行排序
+           temp =_.reverse(_.sortBy(temp, function(o) {return o.hightResponse}));
+           //把原来进程数组里的前几个替换掉
+           for(var j=0;j<temp.length;j++){
+            pObjs[j]=temp[j]
+           }
+          return pObjs;
+        }
+        function renderUse(pObj){
+          pObj.readyTime = corretTime;
+            if(pObj.readyTime==0){
+              pObj.firstText = s.paper.text(75,pObj.y+40,'0').attr({
+                  fill: "#ffffff",
+                  stroke: "#ffffff",
+              });
+            }
+           pObj.left = 75+pObj.readyTime*(600/50);
+           pObj.width = (pObj.runTime)*(600/50);
+           pObj.right = 75+(pObj.readyTime+pObj.runTime)*(600/50);
+           corretTime+=pObj.runTime;
+            pObj.Rect = s.paper.rect(pObj.left,370,0,20).attr({
+                fill: pObj.color,
+                stroke: "#ffffff",
+                strokeWidth: 1
+            });
+            pObj.circle = s.paper.circle(pObj.left, pObj.y-30,25).attr({
+              fill: "transparent",
+              stroke: "#ffffff",
+              strokeWidth: 0
+            });
+            pObj.text = s.paper.text(pObj.right,pObj.y+40,corretTime).attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+
         }
     }
   

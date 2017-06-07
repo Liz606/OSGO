@@ -39,34 +39,38 @@
                             </div>
                         </div>
                     </v-link>
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
+                    <v-link href="/hightResponse" class="card-container col-xs-12 col-sm-6 col-md-4">
                         <div class="card">
                             <div class="title">高响应比优先调度算法</div>
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
+                            <div class="content">
+                                <img src="../assets/images/SJFSchedul-mask.png" height="392" width="627" alt="">
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
                             </div>
                         </div>
                     </v-link>
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4"> 
+                    <v-link href="/firstFit" class="card-container col-xs-12 col-sm-6 col-md-4"> 
                         <div class="card">
                             <div class="title">首次适应分配</div>
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-                                <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
+                            <div class="content">
+                                <img src="../assets/images/FirstFix-mask.png" height="392" width="627" alt="">
+                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
                             </div>
                         </div>
                     </v-link>
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
+                    <v-link href="/bestFit" class="card-container col-xs-12 col-sm-6 col-md-4">
                         <div class="card">
                             <div class="title">最佳分配</div>
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
-                                <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
+                            <div class="content">
+                                <img src="../assets/images/FirstFix-mask.png" height="392" width="627" alt="">
+                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
                             </div>
                         </div> 
                     </v-link>
-                    <v-link href="/courseState" class="card-container col-xs-12 col-sm-6 col-md-4">
+                    <v-link href="/worstFit" class="card-container col-xs-12 col-sm-6 col-md-4">
                         <div class="card">
-                            <div class="title">最差分配以及分页</div>
-                            <div class="content bgImg" style="background-image:url('http://static.ghostchina.com/image/b/5e/877fa798be75dbe791dba07ac4811.jpg')">
+                            <div class="title">最差分配</div>
+                            <div class="content">
+                                <img src="../assets/images/WorstFix-mask.png" height="392" width="627" alt="">
                                 <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
                             </div>
                         </div>

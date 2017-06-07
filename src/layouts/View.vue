@@ -14,14 +14,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="active"><v-link href="/">首页<span class="sr-only">(current)</span></v-link></li>
-            <li><a href="#">关于</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="搜索" aria-describedby="basic-addon2">
-              <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-search"></span></span>
-            </div>
-          </form>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
       <div id="js-pjax-loader-bar" class="pjax-loader-bar is-loading">
@@ -83,6 +76,15 @@
 </script>
 
 <style scoped>
+.bgImg{
+  height: 100%;
+}
+/*.content-container{
+  height:calc( 100% - 127px );
+}*/
+.copyright{
+  height: 75px;
+}
   .navbar-brand > img {
       display: block;
       margin-top: -15px;
@@ -123,9 +125,6 @@
       padding-top: 28px;
       padding-bottom: 28px;
       border-top: 1px solid #303030;
-      /*position: fixed;
-      width: 100%;
-      bottom: 0;*/
   }
   #back-to-top {
     position: fixed;
@@ -142,6 +141,9 @@
       width: 30px;
       height: 30px;
       line-height: 30px;
+  }
+  .svg-container{
+    margin: 20px 0 0 0;
   }
   /* 小屏幕（平板，大于等于 768px） */
   @media (min-width: 768px) {

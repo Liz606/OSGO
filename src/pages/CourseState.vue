@@ -20,6 +20,7 @@
           </div>
           <div class="svg-container col-xs-12 col-md-8">
             <svg id="svg"></svg>
+            <svg id="svg2"></svg>
           </div>
         </div>
       </div>
@@ -38,124 +39,334 @@
   	    VLink
   	  },
       mounted:function (){
-        CourseState();
-        function CourseState(){
+        window.onload = () => {
           var s = Snap("#svg");
-          s.clear();
-          //进程调度
-          var path1 = s.paper.line(450, 220, 500, 320).attr({
-          stroke: "#fff",
-          strokeWidth: 5  
-          });
-          //时间片完
-          var path2 = s.paper.line(470, 220, 520, 320).attr({
-          stroke: "#fff",
-          strokeWidth: 5  
-          });
-          //I/O完成
-          var path3 = s.paper.line(270, 220, 220, 320).attr({
-          stroke: "#fff",
-          strokeWidth: 5  
-          });
-          //I/O请求
-          var path4 = s.paper.line(250, 380, 480, 380).attr({
-          stroke: "#fff",
-          strokeWidth: 5  
-          });
-          var bigCircle = s.paper.circle(375, 80, 50).attr({
-          fill: "#44cef6",
-          stroke: "#ffffff",
-          strokeWidth: 5
-          });
-          
-          var stateRect1 =s.paper.group(s.paper.rect(300, 150,150,50,5,5).attr({
-          fill: "#44cef6"
-          }),s.paper.text(370, 180,'就绪状态').attr({
-          fill: "#fff",
-          'font-weight': 100,
-          'font-size': 20,
-          'text-anchor': 'middle',
-          })) 
-          
-          var stateRect2 =s.paper.group(s.paper.rect(500, 350,150,50,5,5).attr({
-          fill: "#9ed048"
-          }),s.paper.text(570, 380,'运行状态').attr({
-          fill: "#fff",
-          'font-weight': 100,
-          'font-size': 20,
-          'text-anchor': 'middle',
-          })) 
-          
-          var stateRect3 =s.paper.group(s.paper.rect(75, 350,150,50,5,5).attr({
-          fill: "#ffa400"
-          }),s.paper.text(150, 380,'阻塞状态').attr({
-          fill: "#fff",
-          'font-weight': 100,
-          'font-size': 20,
-          'text-anchor': 'middle',
-          }))
-          
-          stateRect1.click(function(){
-              runningToReady()
-          });
-          stateRect2.click(function(){
-              readyToRunning()
-          });
-          stateRect3.click(function(){
-              runningToBlocked()
-          });
-          
-          function readyToRunning(){
-            bigCircle.attr({
-            cx: 375,
-            cy: 80,
-            fill:'#44cef6'
-            })
-            bigCircle.animate({
-            cx: 580,
-            cy: 280,
-            fill:'#9ed048'
-            }, 100);
-          }
-          function runningToReady(){
-            bigCircle.attr({
-            cx: 580,
-            cy: 280,
-            fill:'#9ed048'
-            })
-            bigCircle.animate({
-            cx: 375,
-            cy: 80,
-            fill:'#44cef6'
-            }, 100);
-          }
-          function runningToBlocked(){
-            bigCircle.attr({
-            cx: 580,
-            cy: 280,
-            fill:'#9ed048'
-            })
-            bigCircle.animate({
-            cx: 150,
-            cy: 280,
-            fill:'#ffa400'
-            }, 100);
-          }
-          function blockedToReady(){
-            bigCircle.attr({
-            cx: 150,
-            cy: 280,
-            fill:'#ffa400'
-            })
-            bigCircle.animate({
-            cx: 580,
-            cy: 280,
-            fill:'#9ed048'
-            }, 100);
-          }
+          initRender(s);
         }
       }
   	}
+    function initRender(s){
+      var _local = {};
+      _local.x = 20;
+      _local.y = 50;
+      _local.creatCourse =s.paper.text(355, 45,'创建进程').attr({
+          fill: "#fff",
+          'font-weight': 100,
+          'font-size': 20,
+          'text-anchor': 'middle',
+        })
+       s.paper.text(490, 135,'I/O事件发生').attr({
+        fill: "#fff",
+        'font-weight': 100,
+        'font-size': 20, 
+        'text-anchor': 'middle',
+        });
+       s.paper.path("M480,170 L400,110").attr({
+            // 描边
+            stroke: "#fff",
+            strokeWidth: 5,
+            fill: "none",
+            // 结束标记
+            "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                  fill: "#fff"      
+                              }).marker(0, 0, 13, 13, 3, 5)
+        });
+
+        s.paper.text(360, 90,'就绪').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20, 
+            'text-anchor': 'middle',
+        });
+        s.paper.text(215, 135,'处理机调度').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20,
+            'text-anchor': 'middle',
+        })
+        // 旋转
+        s.paper.path("M320,100 L240,160").attr({
+          // 描边
+          stroke: "#fff",
+          strokeWidth: 5,
+          fill: "none",
+          // 结束标记
+          "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                fill: "#fff"      
+                            }).marker(0, 0, 13, 13, 3, 5)
+          });
+          s.paper.text(200, 210,'运行').attr({
+                fill: "#fff",
+                'font-weight': 100,
+                'font-size': 20, 
+                'text-anchor': 'middle',
+          });
+          s.paper.text(150, 275,'终止进程').attr({
+              fill: "#fff",
+              'font-weight': 100,
+              'font-size': 20,
+              'text-anchor': 'middle',
+          })
+        s.paper.path("M200,240 L200,300").attr({
+          // 描边
+          stroke: "#fff",
+          strokeWidth: 5,
+          fill: "none",
+          // 结束标记
+          "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                fill: "#fff"      
+                            }).marker(0, 0, 13, 13, 3, 5)
+          });
+        s.paper.text(200, 360,'终止').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20, 
+            'text-anchor': 'middle',
+        });
+        s.paper.text(335, 190,'等待I/O').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20,
+            'text-anchor': 'middle',
+        })
+        s.paper.path("M240,200 L440,200").attr({
+          // 描边
+          stroke: "#fff",
+          strokeWidth: 5,
+          fill: "none",
+          // 结束标记
+          "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                fill: "#fff"      
+                            }).marker(0, 0, 13, 13, 3, 5)
+          });
+          s.paper.text(500, 210,'阻塞').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20, 
+            'text-anchor': 'middle',
+          });
+          s.paper.circle(360, 80, 25).attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 5
+          })
+          s.paper.circle(200, 200, 25).attr({
+            fill: "#bddd22",
+            stroke: "#ffffff",
+            strokeWidth: 5
+          })
+          s.paper.circle(200, 350, 25).attr({
+            fill: "#b0a4e3",
+            stroke: "#ffffff",
+            strokeWidth: 5
+          })
+          s.paper.circle(500, 200, 25).attr({
+            fill: "#f36838",
+            stroke: "#ffffff",
+            strokeWidth: 5
+          })
+          
+          var triangle = s.paper.path('M70 425 L95 440 L70 455  Z').attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 1
+          })
+          var clickBtnRect = s.paper.group(triangle,s.paper.circle(80, 440,25).attr({
+              fill: "transparent",
+              stroke: "#ffffff",
+              strokeWidth: 5
+            }));
+          clickBtnRect.click(function(){
+            CourseState(s)
+          })
+    }
+    function CourseState(s){ 
+      s.clear();
+      var local = {};
+      local.x = 20;
+      local.y = 50;
+      var triangle = s.paper.path('M70 425 L95 440 L70 455  Z').attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 1
+          })
+      var clickBtnRect = s.paper.group(triangle,s.paper.circle(80, 440,25).attr({
+          fill: "transparent",
+          stroke: "#ffffff",
+          strokeWidth: 5
+        }));
+      var isAnimate = true;
+      creatCourse()
+      
+      clickBtnRect.click(function(){
+          if(!isAnimate){
+            isAnimate = true;
+            CourseState(s)
+          }else{
+            return
+          }
+      })
+      
+      function creatCourse(){
+        local.creatCourse =s.paper.text(355, 45,'创建进程').attr({
+          fill: "#fff",
+          'font-weight': 100,
+          'font-size': 20,
+          'text-anchor': 'middle',
+        })
+        toReady()
+      }
+      function toReady(flag){
+        if(local.readyIO){
+          var textState = s.paper.text(490, 135,'I/O事件发生').attr({
+              fill: "#fff",
+              'font-weight': 100,
+              'font-size': 20, 
+              'text-anchor': 'middle',
+              });
+            var tempArr = s.paper.path("M480,170 L400,110").attr({
+              // 描边
+              stroke: "#fff",
+              strokeWidth: 5,
+              fill: "none",
+              // 结束标记
+              "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                    fill: "#fff"      
+                                }).marker(0, 0, 13, 13, 3, 5)
+              });
+        }
+        if(!local.readyCPU){
+          local.readyCPU =s.paper.circle(360, 80, 0).attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 5
+          }).animate({
+            r:25
+          },500,function(){
+            var textState = s.paper.text(360, 90,'就绪').attr({
+              fill: "#fff",
+              'font-weight': 100,
+              'font-size': 20, 
+              'text-anchor': 'middle',
+              });
+              
+               getCPU(flag)
+          })
+        }else{
+          var readyIOClone = local.readyIO.clone().animate({
+            cx:360,
+            cy:80
+          },500,function(){
+              // tempArr.remove()
+              readyIOClone.remove();
+               getCPU(flag)
+          })
+        }
+      }
+      function getCPU(flag){
+        var creatGetCPU = s.paper.text(215, 135,'处理机调度').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20,
+            'text-anchor': 'middle',
+        })
+        // 旋转
+        var tempArr = s.paper.path("M320,100 L240,160").attr({
+          // 描边
+          stroke: "#fff",
+          strokeWidth: 5,
+          fill: "none",
+          // 结束标记
+          "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                fill: "#fff"      
+                            }).marker(0, 0, 13, 13, 3, 5)
+          });
+        local.running = local.readyCPU.clone().animate({
+              cx:'200',
+              cy:'200',
+              fill:'#bddd22'
+            },500,function(){
+              var textState = s.paper.text(200, 210,'运行').attr({
+                fill: "#fff",
+                'font-weight': 100,
+                'font-size': 20, 
+                'text-anchor': 'middle',
+                });
+                // tempArr.remove()
+                if(!flag){
+                  readyIO();
+                }else{
+                  endCourse();
+                }
+                
+        })
+      }
+      function endCourse(){
+        var shoutOut = s.paper.text(150, 275,'终止进程').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20,
+            'text-anchor': 'middle',
+        })
+        var tempArr = s.paper.path("M200,240 L200,300").attr({
+          // 描边
+          stroke: "#fff",
+          strokeWidth: 5,
+          fill: "none",
+          // 结束标记
+          "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                fill: "#fff"      
+                            }).marker(0, 0, 13, 13, 3, 5)
+          });
+        local.end = local.running.clone().animate({
+                cx:'200',
+                cy:'350',
+                fill:'#b0a4e3'
+              },500,function(){
+                var textState = s.paper.text(200, 360,'终止').attr({
+                  fill: "#fff",
+                  'font-weight': 100,
+                  'font-size': 20, 
+                  'text-anchor': 'middle',
+                  });
+                  // tempArr.remove()
+                  isAnimate = false
+              })
+
+      }
+      function readyIO(){
+        var readyIO = s.paper.text(335, 190,'等待I/O').attr({
+            fill: "#fff",
+            'font-weight': 100,
+            'font-size': 20,
+            'text-anchor': 'middle',
+        })
+        var tempArr = s.paper.path("M240,200 L440,200").attr({
+          // 描边
+          stroke: "#fff",
+          strokeWidth: 5,
+          fill: "none",
+          // 结束标记
+          "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                fill: "#fff"      
+                            }).marker(0, 0, 13, 13, 3, 5)
+          });
+        local.readyIO = local.running.clone().animate({
+            cx:'500',
+            cy:'200',
+            fill:'#f36838'
+          },500,function(){
+            var textState = s.paper.text(500, 210,'阻塞').attr({
+              fill: "#fff",
+              'font-weight': 100,
+              'font-size': 20, 
+              'text-anchor': 'middle',
+              });
+              // tempArr.remove()
+              toReady(true)
+          })
+      }
+    }
 
 
 </script>

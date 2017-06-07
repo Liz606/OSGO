@@ -26,14 +26,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">首页<span class="sr-only">(current)</span></a></li>
-            <li><a href="#">关于</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="搜索" aria-describedby="basic-addon2">
-              <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-search"></span></span>
-            </div>
-          </form>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -92,7 +85,6 @@
 </script>
 
 <style scoped>
-
   .navbar-brand > img {
       display: block;
       margin-top: -15px;
@@ -115,9 +107,6 @@
       padding-top: 28px;
       padding-bottom: 28px;
       border-top: 1px solid #303030;
-      /*position: fixed;
-      width: 100%;
-      bottom: 0;*/
   }
   #back-to-top {
     position: fixed;

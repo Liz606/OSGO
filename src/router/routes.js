@@ -6,4 +6,8 @@ export default {
   '/courseSync': 'CourseSync',
   '/SJFSchedul': 'SJFSchedul',
   '/FCFSchedul': 'FCFSchedul',
+  '/hightResponse': 'HightResponse',
+  '/bestFit': 'BestFit',
+  '/firstFit': 'FirstFit',
+  '/worstFit': 'WorstFit',
 }

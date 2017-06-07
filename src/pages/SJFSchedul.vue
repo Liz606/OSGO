@@ -15,6 +15,15 @@
             </div>
           </div>
           <div class="svg-container col-xs-12 col-md-8">
+            <div class="input-group" id="">
+              <label class="input-group-addon"  for="InputEnd1">输入进程参数</label>
+              <input type="text" class="form-control" id="InputEnd1" placeholder="[0,20],[15,10],[6,5],[7,2]" value="[0,20],[15,10],[6,5],[7,2]">
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="updateParams" type="button">提交</button>
+              </span>
+            </div>
+            
+            <p>一个数组为一个进程，数组第一个参数表示进程到达就绪队列时刻，第二个参数表示进程预估使用临处理机时长。</p>
             <svg id="svg"></svg>
           </div>
         </div>
@@ -28,479 +37,263 @@
   	import MainLayout from '../layouts/View.vue'
     import VLink from '../components/VLink.vue'
   	import '../assets/snap/snap.svg.0.5.1.js'
+    import _ from '../assets/lodash/lodash.min.js'
+    import $ from '../assets/jquery/jquery.js'
   	export default {
   	  components: {
   	    MainLayout,
   	    VLink
   	  },
       mounted:function(){
-        var s = new Snap('#svg');
-        //SNPFSchedulSVG();
-        SNPFSchedulSVG();
-        function SNPFSchedulSVG(){
-          s.clear();
-          var prosess = s.paper.text(80,50,'进程').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          var arrivedTime = s.paper.text(180,50,'到达时间').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          var runningTime = s.paper.text(280,50,'运行时间').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          //到达时间
-          s.paper.text(180,100,'0').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,160,'2').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,230,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,300,'5').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          //运行时间
-          s.paper.text(280,100,'7').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,160,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,230,'1').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,300,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-
-          var _S1 = s.paper.circle(100, 90, 25).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S2 = s.paper.circle(100, 160, 25).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S3 = s.paper.circle(100, 230, 25).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S4 = s.paper.circle(100, 300, 25).attr({
-              fill: "#f47983",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 90, 25).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 160, 25).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 230, 25).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 300, 25).attr({
-              fill: "#f47983",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          //CPU
-          var CUPRect = s.paper.rect(75 ,400,600,20).attr({
-                fill: "#d6ecf0",
-                stroke: "#ffffff",
-                strokeWidth: 1
-            });
-          s.paper.text(75,440,'0').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(337.5,440,'7').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(375,440,'8').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(525,440,'12').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(675,440,'16').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-
-          var _S1Rect = s.paper.rect(75 ,400,0,20).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S2Rect = s.paper.rect(337.5 ,400,0,20).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S3Rect = s.paper.rect(375 ,400,0,20).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S4Rect = s.paper.rect(525 ,400,0,20).attr({
-              fill: "#f47983",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          function S1Active(){
-            _S1.animate({
-              cx:'75',
-              cy:'370'
-            },500,function(){
-              _S1Rect.animate({
-                width:'262.5'
-              },3000)
-              _S1.animate({
-                cx:'337.5'
-              },3000,function(){
-                S2Active();
-              })
+          window.onload = () => {
+            var s = new Snap('#svg');
+            SNPFSchedulSVG(s);
+            $('#updateParams').click(function(){
+              SNPFSchedulSVG(s);
             })
           }
-          function S2Active(){
-            _S2.attr({
-              cx:'337.5'
-            })
-            _S2Rect.animate({
-                width:'37.5'
-              },500)
-              _S2.animate({
-                cx:'375'
-              },500,function(){
-                S3Active();
-              })
-          }
-          function S3Active(){
-            _S3.attr({
-              cx:'375'
-            })
-            _S3Rect.animate({
-              width:'150'
-            },1000)
-            _S3.animate({
-              cx:'525'
-            },1000,function(){
-              S4Active();
-            })
-          }
-          function S4Active(){
-            _S4.attr({
-              cx:'525'
-            })
-            _S4Rect.animate({
-              width:'150'
-            },1000)
-            _S4.animate({
-              cx:'675'
-            },1000)
-          }
-          setTimeout(S1Active,5000);
-          setTimeout(function(){
-            _S2.animate({
-              cx:'100',
-              cy:'370'
-            },500)
-          },5500);
-          setTimeout(function(){
-            _S3.animate({
-              cx:'120',
-              cy:'370'
-            },500)
-          },6000);
-          setTimeout(function(){
-            _S4.animate({
-              cx:'120',
-              cy:'370'
-            },500)
-          },7000);
-        }
-        function SPFSchedulSVG(){
-          s.clear();
-          var prosess = s.paper.text(80,50,'进程').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          var arrivedTime = s.paper.text(180,50,'到达时间').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          var runningTime = s.paper.text(280,50,'运行时间').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          //到达时间
-          s.paper.text(180,100,'0').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,160,'2').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,230,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(180,300,'5').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          //运行时间
-          s.paper.text(280,100,'7').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,160,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,230,'1').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(280,300,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-
-          var _S1 = s.paper.circle(100, 90, 25).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S2 = s.paper.circle(100, 160, 25).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S3 = s.paper.circle(100, 230, 25).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          var _S4 = s.paper.circle(100, 300, 25).attr({
-              fill: "#f47983",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 90, 25).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 160, 25).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 230, 25).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          s.paper.circle(100, 300, 25).attr({
-              fill: "#f47983",
-              stroke: "#ffffff",
-              strokeWidth: 5
-          });
-          //CPU
-          var CUPRect = s.paper.rect(75 ,400,600,20).attr({
-                fill: "#d6ecf0",
-                stroke: "#ffffff",
-                strokeWidth: 1
-            });
-          s.paper.text(75,440,'0').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(150,440,'2').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(225,440,'4').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(262.5,440,'5').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(337.5,440,'7').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(487.5,440,'11').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-          s.paper.text(675,440,'16').attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-          });
-
-          var _S1Rect1 = s.paper.rect(75 ,400,0,20).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S1Rect2 = s.paper.rect(487.5 ,400,0,20).attr({
-              fill: "#44cef6",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S2Rect1 = s.paper.rect(150 ,400,0,20).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S2Rect2 = s.paper.rect(262.5 ,400,0,20).attr({
-              fill: "#9ed048",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S3Rect = s.paper.rect(225 ,400,0,20).attr({
-              fill: "#ffa400",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          var _S4Rect = s.paper.rect(337.5 ,400,0,20).attr({
-              fill: "#f47983",
-              stroke: "#ffffff",
-              strokeWidth: 1
-          });
-          function S1Active(){
-            _S1.animate({
-              cx:'75',
-              cy:'370'
-            },300,function(){
-              _S1Rect1.animate({
-                width:'75'
-              },1000)
-              _S1.animate({
-                cx:'150'
-              },1000,function(){
-                S2Active();
-              })
-            })
-          }
-          function S2Active(){
-            _S2.attr({
-              cx:'150',
-              cy:'370'
-            })
-            _S2Rect1.animate({
-                width:'75'
-              },1000)
-              _S2.animate({
-                cx:'225'
-              },1000,function(){
-                S3Active();
-              })
-          }
-          function S3Active(){
-            _S3.attr({
-              cx:'225',
-              cy:'370'
-            })
-            _S3Rect.animate({
-              width:'37.5'
-            },500)
-            _S3.animate({
-              cx:'262.5',
-              cy:'370'
-            },500,function(){
-              _S2.attr({
-                cx:'262.5'
-              });
-              _S2Rect2.animate({
-                width:'75'
-              },1000)
-               _S2.animate({
-                cx:'337.5'
-              },1000,function(){
-                S4Active();
-              })
-            })
-          }
-          function S4Active(){
-            _S4.attr({
-              cx:'337.5',
-              cy:'370'
-            })
-            _S4Rect.animate({
-              width:'150'
-            },2000)
-            _S4.animate({
-              cx:'487.5'
-            },2000,function(){
-              _S1.attr({
-                cx:'487.5'
-              })
-              _S1Rect2.animate({
-                width:'187.5'
-              },1500)
-              _S1.animate({
-                cx:'675'
-              },1500)
-            })
-          }
-          setTimeout(S1Active,1000);
-          setTimeout(function(){
-             _S2.animate({
-              cx:'150',
-              cy:'370'
-            },300)
-          },2000);
-          setTimeout(function(){
-             _S3.animate({
-              cx:'225',
-              cy:'370'
-            },300)
-          },3000);
-          setTimeout(function(){
-             _S4.animate({
-              cx:'337.5',
-              cy:'370'
-            },300)
-          },4500);
-        }
-      } 
+        } 
   	}
+    function renderView(s,n,a1,a2){
+      s.clear();
+      var col = 80;
+      var row = 80;
+      var tCol = 100;//列距
+      var tRow = 30;//行距
+      var colors = ['#44cef6','#9ed048','#ffa400','#f47983']
+      var P = [];
+      s.paper.text(80,row-row/2,'进程').attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+      });
+      s.paper.text(180,row-row/2,'到达时间').attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+      });
+      s.paper.text(280,row-row/2,'运行时间').attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+      });
+      for(var i = 0;i < n;i++){
+        var obj = {};
+            obj.name = 'P'+i;
+            obj.x = col;
+            obj.y = row;
+            obj.arriveTime = a1[i];
+            obj.runTime = a2[i];
+            obj.color = colors[i];
+            //process
+            s.paper.text(col, row,obj.name).attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            
+            //到达时间
+            s.paper.text(col+tCol,row,obj.arriveTime).attr({
+              fill: "#ffffff",
+              stroke: "#ffffff",
+            })
+            //运行时间
+            s.paper.text(col+tCol*2,row,obj.runTime).attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
+            row+=tRow;
+            P.push(obj)
+        }
+        return P;
+    }
+    function renderCPU(s,p){
+      var y = p[p.length-1].y+200;
+      _.map(p,function(val){
+         val.y=y;
+         val.arriveTime = _.parseInt(val.arriveTime);
+         val.runTime = _.parseInt(val.runTime);
+       });
+      p =  _.orderBy(p,['arriveTime'],['asc']);
+      s.paper.rect(375,20,2,y-200).attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 1
+        });
+      s.paper.text(390,60,'等待时间:').attr({
+        fill: "#fff",
+        'font-weight': 100,
+        'font-size': 16, 
+        });
+      s.paper.text(390,140,'平均等待时间:').attr({
+        fill: "#fff",
+        'font-weight': 100,
+        'font-size': 16, 
+        });
+      return p;
+    }
+    function getArrStr(){
+      var tempCourseInfo =$('#InputEnd1').val();
+      if(tempCourseInfo){
+        tempCourseInfo =_.drop(_.split(tempCourseInfo,'['));
+        for(var j=0;j<tempCourseInfo.length;j++){
+          if(j<tempCourseInfo.length-1){
+            tempCourseInfo[j] = tempCourseInfo[j].slice(0,-2).split(',');
+          }else{
+            tempCourseInfo[j] = tempCourseInfo[j].slice(0,-1).split(',');
+          }
+        }
+      }
+      return tempCourseInfo;
+    }
+    function getArrStr(){
+      var tempCourseInfo =$('#InputEnd2').val();
+      if(tempCourseInfo){
+        tempCourseInfo =_.drop(_.split(tempCourseInfo,'['));
+        for(var j=0;j<tempCourseInfo.length;j++){
+          if(j<tempCourseInfo.length-1){
+            tempCourseInfo[j] = tempCourseInfo[j].slice(0,-2).split(',');
+          }else{
+            tempCourseInfo[j] = tempCourseInfo[j].slice(0,-1).split(',');
+          }
+        }
+      }
+      return tempCourseInfo;
+    }
+    function SNPFSchedulSVG(s){
+            s.clear();
+      var n = 4;
+      var coursesArr = getArrStr();
+      var a1 = [];
+      var a2 = [];
+      _.map(coursesArr,function(val){
+        a1.push(_.toString(val[0]));
+        a2.push(_.toString(val[1]));
+      })
+      
+      
+      var Ps = renderView(s,n,a1,a2);
+      Ps = renderCPU(s,Ps);
+      var clickBtnRect = s.paper.group(s.paper.path('M70 425 L95 440 L70 455  Z').attr({
+            fill: "#44cef6",
+            stroke: "#ffffff",
+            strokeWidth: 1
+          }),s.paper.circle(80, 440,25).attr({
+          fill: "transparent",
+          stroke: "#ffffff",
+          strokeWidth: 5
+        }));
+      var isAnimate = false;
+      var pObjs = _.cloneDeep(Ps)
+        pObjs = _.reverse(pObjs);
+      var corretTime = 0;
+      var backPObjs=[];
+      pObjs.status = 1
+        //事件队列
+        clickBtnRect.click(function(){
+          if(!isAnimate){
+            if(pObjs.length > 0&&pObjs.status==1){
+                //根据corretTime更新pObjs
+              //更新进程列表
+              pObjs = updatePObjs(corretTime);
+              backPObjs.push(Active(pObjs.pop()))
+            }else if(pObjs.length == 0&&pObjs.status==1){
+              pObjs.status=2
+              //等待时间
+              var readyItem = "";
+              var plantReadyTime = "(";
+              var allTime = 0;
+              _.map(backPObjs,function(val){
+                readyItem+= val.name+ ' = ' +val.readyTime+";";
+                plantReadyTime += val.readyTime + '+';
+                allTime += val.readyTime;
+              })
+              plantReadyTime =  plantReadyTime.substring(0,plantReadyTime.length-1)+")/"+backPObjs.length+'='+allTime/backPObjs.length;
+              backPObjs.readyItem = s.paper.text(390,80,readyItem).attr({
+                fill:'#ffffff'
+              })
+              //平均等待时间
+              backPObjs.plantReadyTime = s.paper.text(390,160,plantReadyTime).attr({
+                fill:'#ffffff'
+              })
+            }else if(pObjs.length==0&&pObjs.status==2){
+              //重置
+              
+              _.map(backPObjs,function(val){
+                val.Rect.remove();
+                val.circle.remove();
+                val.text.remove();
+                if(val.firstText){
+                  val.firstText.remove();
+                }
+              })
+              backPObjs.readyItem.remove();
+              backPObjs.plantReadyTime.remove();
+              pObjs = _.reverse(_.cloneDeep(Ps));
+              corretTime=0;
+              pObjs.status=1;
+            }
+          }
+        })
+        function Active(pObj){
+           renderUse(pObj);
+            pObj.Rect.animate({
+              width:pObj.width
+            },pObj.runTime*100,function(){
+              isAnimate =false;
+            })
+            pObj.circle.attr({
+              fill:pObj.color,
+              strokeWidth: 5
+            }).animate({
+              cx:pObj.right
+            },pObj.runTime*100,function(){
+              isAnimate =false;
+            })
+            return pObj;
+        }
+        function updatePObjs(time){
+          var temp = [];
+          //得到已经到达的进程
+          _.map(pObjs,function(valObj){
+            if(valObj.arriveTime<time){
+              temp.push(valObj);
+            }
+          })
+          //对已经到达的进程按照预估时间大小进行排序
+           temp =_.reverse(_.sortBy(temp, function(o) {return o.runTime}));
+           //把原来进程数组里的前几个替换掉
+           for(var j=0;j<temp.length;j++){
+            pObjs[j]=temp[j]
+           }
+          return pObjs;
+        }
+        function renderUse(pObj){
+          pObj.readyTime = corretTime;
+            if(pObj.readyTime==0){
+              pObj.firstText = s.paper.text(75,pObj.y+40,'0').attr({
+                  fill: "#ffffff",
+                  stroke: "#ffffff",
+              });
+            }
+           pObj.left = 75+pObj.readyTime*(600/50);
+           pObj.width = (pObj.runTime)*(600/50);
+           pObj.right = 75+(pObj.readyTime+pObj.runTime)*(600/50);
+           corretTime+=pObj.runTime;
+            pObj.Rect = s.paper.rect(pObj.left,370,0,20).attr({
+                fill: pObj.color,
+                stroke: "#ffffff",
+                strokeWidth: 1
+            });
+            pObj.circle = s.paper.circle(pObj.left, pObj.y-30,25).attr({
+              fill: "transparent",
+              stroke: "#ffffff",
+              strokeWidth: 0
+            });
+            pObj.text = s.paper.text(pObj.right,pObj.y+40,corretTime).attr({
+                fill: "#ffffff",
+                stroke: "#ffffff",
+            });
 
-    
-    
-
+        }
+    }
+   
 </script>
 <style scoped>
   .content-container {
