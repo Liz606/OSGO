@@ -21,7 +21,7 @@
             <div class="input-group" id="">
               <label class="input-group-addon"  for="InputEnd1">输入进程参数</label>
               <input type="text" class="form-control" id="InputEnd1" placeholder="[1,2],[2,3],[0,2]" value="[1,2],[2,3],[0,2]">
-              <label class="input-group-addon"  for="InputEnd2">输入信号量个数</label>
+              <label class="input-group-addon"  for="InputEnd2">临界资源个数</label>
               <input type="text" class="form-control" id="InputEnd2" placeholder="请输入数字" value="2">
               <span class="input-group-btn">
                 <button class="btn btn-default" id="updateParams" type="button">提交</button>
@@ -106,7 +106,7 @@
         if(sObj.length>0&&courseObj.length>0){
           requstS(s,courseObj.pop(),sObj);
         }else if(sObj.length<=0){
-           var tempText = s.paper.text(100,100,'信号量不足').attr({
+           var tempText = s.paper.text(100,100,'临界资源不足').attr({
              'fill': "#fff",
             'font-weight': 100,
             'font-size': 20,

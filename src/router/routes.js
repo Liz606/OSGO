@@ -8,6 +8,9 @@ export default {
   '/FCFSchedul': 'FCFSchedul',
   '/hightResponse': 'HightResponse',
   '/bestFit': 'BestFit',
+  '/bestFit(0)': 'BestFit(0)',
   '/firstFit': 'FirstFit',
   '/worstFit': 'WorstFit',
+  '/page9': 'page9',
+  
 }

@@ -156,7 +156,7 @@
       var row = 555;
       var col = 80;
       var hight = 300;
-      var colors = ['#44cef6','#9ed048','#ffa400','#f47983','#cca4e3']
+      var colors = ['#44cef6','#9ed048','#ffa400','#f47983','#f05654','#56004f']
       var allMemory = _.parseInt(a0[1],10)-_.parseInt(a0[0],10);
       var corretCol = col;
       var allWorks = [];
@@ -269,6 +269,11 @@
                 var ex =  s.paper.text(status[n].x,status[n].start,'没有满足该作业的空闲区,作业进入等待队列。').attr({
                   fill:'#ffffff'
                 })
+                ex.animate({},1000,function(){
+                  Obj.rect.remove();
+                  ex.remove();
+                })
+                
                 isAnimate = false;
                 return;
              }else if(isallow(Obj,status,n)&&!Obj.isFix){

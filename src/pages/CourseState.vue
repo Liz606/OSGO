@@ -49,7 +49,7 @@
       var _local = {};
       _local.x = 20;
       _local.y = 50;
-      _local.creatCourse =s.paper.text(355, 45,'创建进程').attr({
+      _local.creatCourse =s.paper.text(205, 45,'创建进程').attr({
           fill: "#fff",
           'font-weight': 100,
           'font-size': 20,
@@ -165,7 +165,16 @@
             stroke: "#ffffff",
             strokeWidth: 5
           })
-          
+          var tem = s.paper.path("M250,45 L310,65").attr({
+                  // 描边
+                  stroke: "#fff",
+                  strokeWidth: 5,
+                  fill: "none",
+                  // 结束标记
+                  "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                        fill: "#fff"      
+                                    }).marker(0, 0, 13, 13, 3, 5)
+              });
           var triangle = s.paper.path('M70 425 L95 440 L70 455  Z').attr({
             fill: "#44cef6",
             stroke: "#ffffff",
@@ -208,17 +217,31 @@
       })
       
       function creatCourse(){
-        local.creatCourse =s.paper.text(355, 45,'创建进程').attr({
+        local.creatCourse =s.paper.text(205, 45,'创建进程').attr({
           fill: "#fff",
           'font-weight': 100,
           'font-size': 20,
           'text-anchor': 'middle',
         })
-        toReady()
+        var tem = s.paper.path("M250,45 L310,65").attr({
+                  // 描边
+                  stroke: "transparent",
+                  strokeWidth: 5,
+                  fill: "none",
+                  // 结束标记
+                  "marker-end": s.paper.path("M2,2 L2,8 L5,5 L2,2").attr({
+                                        fill: "#fff"      
+                                    }).marker(0, 0, 13, 13, 3, 5)
+              });
+              tem.animate({
+                stroke:"#fff",
+              },200,function(){
+                toReady()
+              })
       }
       function toReady(flag){
         if(local.readyIO){
-          var textState = s.paper.text(490, 135,'I/O事件发生').attr({
+          var textState = s.paper.text(490, 135,'I/O事件结束').attr({
               fill: "#fff",
               'font-weight': 100,
               'font-size': 20, 
@@ -249,7 +272,7 @@
               'font-size': 20, 
               'text-anchor': 'middle',
               });
-              
+               
                getCPU(flag)
           })
         }else{

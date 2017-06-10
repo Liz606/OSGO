@@ -5,11 +5,11 @@
         <div class="row">
           <div class="col-xs-12 col-md-4">
             <div class="illustrate-container">
-              <div class="title">动态存储分配算法— 最佳适应（best-fit）</div>
+              <div class="title">动态存储分配算法—分页置换算法（worst-fit）</div>
               <blockquote>
-               最佳适应：分配最小的足够大的空闲区域。必须查找整个列表，除非列表按大小排序。这种方法可以产生最小剩余空闲区域。</blockquote>
-            </div>
-             <div class="input-group">
+               分页 (paging) 内存管理方案允许进程的物理地址空间可以是非连续的。分页避免了将不同大小的内存块匹配到交换空间上这样的麻烦。当位于内存中的代码或数据需要换出时，必须先在备份区上找到空间，这时间题就产生了。</blockquote>
+               
+              <div class="input-group">
               <label class="input-group-addon"  for="InputEnd1">内存块</label>
               <input type="text" class="form-control" id="InputEnd1" placeholder="[0,50]" value="[0,50]">
             </div><div class="input-group">
@@ -22,6 +22,7 @@
               <span class="input-group-btn">
                 <button class="btn btn-default" id="updateParams" type="button">提交</button>
               </span>
+            </div>
             </div>
           </div>
           <div class="svg-container col-xs-12 col-md-8">
@@ -48,9 +49,9 @@
       mounted:function(){
         window.onload = () => {
           var s = Snap("#svg");
-          BestFit(s);
+          WorstFit(s);
           $('#updateParams').click(function(){
-              BestFit(s);
+              WorstFit(s);
             })
         }
       }
@@ -187,8 +188,10 @@
         allWorks.push(temp);
         corretCol+=hight/allMemory*_.parseInt(val,10)+20;
       })
+      
       return allWorks;
     }
+    
     function getArrStr(){
       var tempCourseInfo =$('#InputEnd2').val();
       if(tempCourseInfo){
@@ -203,10 +206,9 @@
       }
       return tempCourseInfo;
     }
-    function BestFit(s){
+    function WorstFit(s){
       s.clear();
-
-       var a0 = $('#InputEnd1').val();
+            var a0 = $('#InputEnd1').val();
           a0 = a0.slice(1,a0.length-1).split(',');
 
       var a1 = getArrStr();//内存被占用情况
@@ -214,7 +216,6 @@
 
       var a2 = $('#InputEnd3').val();
           a2 = a2.slice(1,a2.length-1).split(',');
-
       s.paper.text(110,50,'内存').attr({
           fill: "#ffffff",
           stroke: "#ffffff",
@@ -238,7 +239,6 @@
           strokeWidth: 5
         }));
         var isAnimate = false;
-        var readyQueue = {x:400,y:300}
         clickBtnRect.click(function(){
           if(!isAnimate){
             isAnimate = true;
@@ -246,12 +246,12 @@
                 Active(evts.pop(),getEmptyFlag(s,a0,a1));
             }else{
               //重置
-              BestFit(s)
+              WorstFit(s)
             }
           }
         })
         function Active(Obj,M){
-          M.status = _.orderBy(M.status,['emptyLong'],['asc']);
+          M.status = _.orderBy(M.status,['emptyLong'],['desc']);
           //对应a1也要进行排序
            _.map(a1,function(val){
              _.filter(a1,function(value,index){
@@ -283,7 +283,7 @@
           }
           //当个待分配作业一一对比
           function objActive(Obj,status,n){
-              if(!isallow(Obj,status,n)&&Obj.numNext >= status.length-1){
+             if(!isallow(Obj,status,n)){
                 var ex =  s.paper.text(status[n].x,status[n].start,'没有满足该作业的空闲区,作业进入等待队列。').attr({
                   fill:'#ffffff'
                 })
@@ -313,6 +313,7 @@
           function toNextEmptyBlock(Obj,status,n){
             Obj.numNext++;
             var statu = status[n+1];
+            console.log(status[n])
             var ex =  s.paper.text(status[n].x,status[n].start,'空闲区大小不满足此作业内存需求，不允许分配').attr({
                 fill:'#ffffff'
               })
@@ -337,7 +338,7 @@
               x:status[n].row
             },1000,function(){
               a1[n][1] = status[n].emptyStart+_.parseInt(Obj.long,10);
-              var isEqual = _.filter(a1,function(val){
+             var isEqual = _.filter(a1,function(val){
               return a1[n][1]==_.nth(val,0);
              })
               if(isEqual.length==0&&a1[n][1]!=_.nth(a0,1)){

@@ -71,54 +71,77 @@
           fill: "#ffffff",
           stroke: "#ffffff",
       });
+      s.paper.text(380,row-row/2,'等待时间').attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+      });
+      s.paper.text(480,row-row/2,'响应比').attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+      });
       for(var i = 0;i < n;i++){
         var obj = {};
-            obj.name = 'P'+i;
             obj.x = col;
             obj.y = row;
-            obj.arriveTime = a1[i];
+            obj.arriveTime = _.parseInt(a1[i],10);
             obj.runTime = a2[i];
             obj.color = colors[i];
-            //process
-            s.paper.text(col, row,obj.name).attr({
-                fill: "#ffffff",
-                stroke: "#ffffff",
-            });
-            
-            //到达时间
-            s.paper.text(col+tCol,row,obj.arriveTime).attr({
-              fill: "#ffffff",
-              stroke: "#ffffff",
-            })
-            //运行时间
-            s.paper.text(col+tCol*2,row,obj.runTime).attr({
-                fill: "#ffffff",
-                stroke: "#ffffff",
-            });
-            row+=tRow;
+          
+            obj.readingTime = '-';
+            obj.hightResponse = '-';
+            obj.tCol = 100;//列距
+            obj.tRow = 30;//行距
             P.push(obj)
         }
         return P;
     }
     function renderCPU(s,p){
-      var y = p[p.length-1].y+200;
-      _.map(p,function(val){
-         val.y=y;
+       p = _.orderBy(p,['arriveTime'],['asc']);
+      var y =  p[p.length-1].y+p[p.length-1].tRow*(p.length-1)+200;
+     
+      _.map(p,function(val,index){
+            val.name = 'P'+index;
+          val.ry = val.y+val.tRow*(index);
          val.arriveTime = _.parseInt(val.arriveTime);
          val.runTime = _.parseInt(val.runTime);
+      //process
+        var tempArrive = val.arriveTime;
+        s.paper.text(val.x, val.ry,val.name).attr({
+            fill: val.color,
+            stroke: val.color,
+        });
+        //到达时间
+        s.paper.text(val.x+val.tCol,val.ry,_.toString(tempArrive)).attr({
+          fill: "#ffffff",
+          stroke: "#ffffff",
+        })
+        //运行时间
+        s.paper.text(val.x+val.tCol*2,val.ry,val.runTime).attr({
+            fill: "#ffffff",
+            stroke: "#ffffff",
+        });
+        //等待时间
+        
+        val.readingTimeObj =  s.paper.text(val.x+val.tCol*3,val.ry,val.readingTime).attr({
+            fill: "#ffffff",
+            stroke: "#ffffff",
+        });
+        val.hightResponseObj =  s.paper.text(val.x+val.tCol*4,val.ry,val.readingTime).attr({
+            fill: "#ffffff",
+            stroke: "#ffffff",
+        });
        });
-      p =  _.orderBy(p,['arriveTime'],['asc']);
-      s.paper.rect(375,20,2,y-200).attr({
+      s.paper.rect(540,20,2,y-200).attr({
             fill: "#44cef6",
             stroke: "#ffffff",
             strokeWidth: 1
         });
-      s.paper.text(390,60,'等待时间:').attr({
+      s.paper.text(550,60,'等待时间:').attr({
         fill: "#fff",
         'font-weight': 100,
         'font-size': 16, 
         });
-      s.paper.text(390,140,'平均等待时间:').attr({
+      s.paper.text(550,140,'平均等待时间:').attr({
         fill: "#fff",
         'font-weight': 100,
         'font-size': 16, 
@@ -182,16 +205,16 @@
               var plantReadyTime = "(";
               var allTime = 0;
               _.map(backPObjs,function(val){
-                readyItem+= val.name+ ' = ' +val.readyTime+";";
-                plantReadyTime += val.readyTime + '+';
-                allTime += val.readyTime;
+                readyItem+= val.name+ ' = ' +val.readingTime+";";
+                plantReadyTime += val.readingTime + '+';
+                allTime += val.readingTime;
               })
               plantReadyTime =  plantReadyTime.substring(0,plantReadyTime.length-1)+")/"+backPObjs.length+'='+allTime/backPObjs.length;
-              backPObjs.readyItem = s.paper.text(390,80,readyItem).attr({
+              backPObjs.readyItem = s.paper.text(550,80,readyItem).attr({
                 fill:'#ffffff'
               })
               //平均等待时间
-              backPObjs.plantReadyTime = s.paper.text(390,160,plantReadyTime).attr({
+              backPObjs.plantReadyTime = s.paper.text(550,160,plantReadyTime).attr({
                 fill:'#ffffff'
               })
             }else if(pObjs.length==0&&pObjs.status==2){
@@ -201,6 +224,8 @@
                 val.Rect.remove();
                 val.circle.remove();
                 val.text.remove();
+                 val.readingTimeObj.remove();
+                  val.hightResponseObj.remove();
                 if(val.firstText){
                   val.firstText.remove();
                 }
@@ -250,7 +275,7 @@
         function renderUse(pObj){
           pObj.readyTime = corretTime;
             if(pObj.readyTime==0){
-              pObj.firstText = s.paper.text(75,pObj.y+40,'0').attr({
+              pObj.firstText = s.paper.text(75,370+40,'0').attr({
                   fill: "#ffffff",
                   stroke: "#ffffff",
               });
@@ -264,16 +289,55 @@
                 stroke: "#ffffff",
                 strokeWidth: 1
             });
-            pObj.circle = s.paper.circle(pObj.left, pObj.y-30,25).attr({
+            pObj.circle = s.paper.circle(pObj.left, 370-30,25).attr({
               fill: "transparent",
               stroke: "#ffffff",
               strokeWidth: 0
             });
-            pObj.text = s.paper.text(pObj.right,pObj.y+40,corretTime).attr({
+            pObj.text = s.paper.text(pObj.right,370+40,corretTime).attr({
                 fill: "#ffffff",
                 stroke: "#ffffff",
             });
+             //更新等待时间
+               if(pObj.readingTime != '-'){
+                  pObj.readingTime = pObj.readingTime;
+                }else{
+                  pObj.readingTime = pObj.arriveTime;
+                }
+                
+                pObj.readingTimeObj.remove();
+                pObj.hightResponseObj.remove();
+                pObj.readingTimeObj=s.paper.text(pObj.x+pObj.tCol*3,pObj.ry,_.toString(pObj.readingTime)).attr({
+                    fill: "#fff143",
+                    stroke: "#fff143",
+                });
+                pObj.hightResponseObj=s.paper.text(pObj.x+pObj.tCol*4,pObj.ry,_.toString(pObj.hightResponse)).attr({
+                    fill: "#fff143",
+                    stroke: "#fff143",
+                });
 
+              _.map(pObjs,function(val){
+                  if(corretTime > val.arriveTime){
+                    console.log(val.readingTime)
+                    if(val.readingTime != '-'){
+                      val.readingTime = val.readingTime+pObj.runTime;
+                    }else{
+                      val.readingTime = pObj.readingTime+pObj.runTime-val.arriveTime;
+                    }
+                  }else{
+                    val.readingTime = pObj.runTime;
+                  }
+                val.readingTimeObj.remove();
+               val.hightResponseObj.remove();
+                val.readingTimeObj=s.paper.text(val.x+val.tCol*3,val.ry,_.toString(val.readingTime)).attr({
+                    fill: "#ffffff",
+                    stroke: "#ffffff",
+                });
+                val.hightResponseObj=s.paper.text(val.x+val.tCol*4,val.ry,_.toString(val.hightResponse)).attr({
+                    fill: "#ffffff",
+                    stroke: "#ffffff",
+                });
+              })
         }
     }
   

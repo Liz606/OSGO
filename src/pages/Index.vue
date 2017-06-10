@@ -75,6 +75,24 @@
                             </div>
                         </div>
                     </v-link>
+                    <v-link href="/page9" class="card-container col-xs-12 col-sm-6 col-md-4">
+                        <div class="card">
+                            <div class="title">分页置换算法</div>
+                            <div class="content">
+                                <img src="../assets/images/page9-mask.png" height="392" width="627" alt="">
+                                <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
+                            </div>
+                        </div>
+                    </v-link>
+                    <v-link href="/bestFit(0)" class="card-container col-xs-12 col-sm-6 col-md-4">
+                        <div class="card">
+                            <div class="title">分页置换算法</div>
+                            <div class="content">
+                                <img src="../assets/images/page9-mask.png" height="392" width="627" alt="">
+                                <div class="illustrate">以图形的方式展现每种调度算法的优点和缺点，帮助教师讲解课程内容、帮助学生理解知识点</div>
+                            </div>
+                        </div>
+                    </v-link>
                 </div>
             </div>
         </div>
